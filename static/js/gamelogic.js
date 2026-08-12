@@ -61,7 +61,7 @@ class GameLogic {
   }
 
   // ステージ初期化・更新
-  updateStage() {
+  updateStage(customTitle = null, customMsg = null, customMsg2 = null, showReview = null) {
     // 初回プレイは必ず「異変なし」＆振り返りボタン非表示
     if (this.isFirstPlay) {
       this.hasAnomaly = false;
@@ -75,20 +75,24 @@ class GameLogic {
     } else {
       // 2回目以降（正解して次の階層へ進む時も振り返りボタンを表示）
       this.hasAnomaly = Math.random() < 0.5;
-      this.showTransition(
-        `階層 ${this.currentStep}`,
-        "異変がないか、ページ内を注意深く確認してください。",
-        "",
-        "探索を開始する",
-        true // 初回以外は常に表示
-      );
+
+      const title = customTitle || `階層 ${this.currentStep}`;
+      const msg = customMsg || "異変がないか、ページ内を注意深く確認してください。";
+      const msg2 = customMsg2 || "";
+      const reviewFlag = (showReview !== null) ? showReview : true;
+
+      this.showTransition(title, msg, msg2, "探索を開始する", reviewFlag);
     }
 
     // 異変の適用 / リセット
     if (window.AnomalyManager) {
       window.AnomalyManager.reset();
       if (this.hasAnomaly) {
-        window.AnomalyManager.applyRandom();
+        const appliedId = window.AnomalyManager.applyRandom();
+        // 図鑑用の保存処理を追加
+        if (appliedId && window.StorageManager) {
+          window.StorageManager.saveUnlockedAnomaly(appliedId);
+        }
       }
     }
   }
@@ -113,7 +117,18 @@ class GameLogic {
     if (playerThinksAnomaly === this.hasAnomaly) {
       // 正解：進行度 +1
       this.currentStep++;
+
+      // 最高到達階層の保存処理を追加
+      if (window.StorageManager) {
+        window.StorageManager.saveMaxStep(this.currentStep);
+      }
+
       if (this.currentStep >= this.maxStep) {
+        // クリア時の保存処理を追加
+        if (window.StorageManager) {
+          window.StorageManager.setHasCleared();
+        }
+
         // クリア時
         this.showTransition(
           "脱出成功",
@@ -135,12 +150,12 @@ class GameLogic {
       // 初回プレイでのミスでなければ振り返りボタンを表示
       const showReview = !wasFirstPlay;
 
-      this.showTransition(
-        `階層 ${this.currentStep}`,
-        "異変がないか、ページ内を注意深く確認してください。",
-        "",
-        "探索を開始する",
-        showReview // 初回ミス以外は表示
+      // 0階層目に戻してステージを更新
+      this.updateStage(
+        "異変の選択に失敗しました",
+        `階層 ${prevStep} で違和感を見落としたか、正常な状態を異変と勘違いしました。`,
+        showReview ? "0階層目に戻ります。「直前のページを振り返る」でさっきのページを確認できます。" : "0階層目に戻ります。",
+        showReview
       );
     }
   }

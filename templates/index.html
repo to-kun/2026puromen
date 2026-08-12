@@ -86,7 +86,7 @@
               </li>
               <li>
                 <span class="news-date">2026.07.15</span>
-                <a href="#" id="news-item-4">令和8年度 市立小中学校の改修工事に伴う利用制限について</a>
+                <a href="#" id="news-item-4">市立小中学校の改修工事に伴う利用制限について</a>
               </li>
               <li>
                 <span class="news-date">2026.07.01</span>
@@ -119,8 +119,8 @@
               <td class="cell">小出高等学校・岩間科学技術大学・同大学院卒</td>
             </tr>
             <tr>
-              <th class="tableheader">血液型</th>
-              <td class="cell">O型</td>
+              <th class="tableheader">特技</th>
+              <td class="cell">変顔</td>
             </tr>
             <tr>
               <th class="tableheader">趣味</th>
@@ -136,9 +136,10 @@
           <p id="city-introduce-text3">この環境を維持していらっしゃる小出市民の皆さまも、小出市の大きな魅力であると考えています。</p>
           <p id="city-introduce-text4">小出の皆さまと、住み続けたい「国際都市・小出」をめざし、市民と行政の間に立ち、魅力を発信するリーダーとして、先進的なまちづくりを進めます。</p>
           <p id="city-introduce-text5">ご理解とご協力を賜りますよう、よろしくお願い申し上げます。</p>
-        </div>
+        </div><br>
 
         <div class="card-list" id="city-symbol">
+          <h2 id="city-symbol-info">私の目指す小出市</h2>
             <article class="card">
                 <img class="card__image" id="card-symbol-img1" src="{{ url_for('static', filename='images/symbol1.png') }}" alt="住みやすい">
                 <h3 class="card__title" id="card-symbol-title1">住みやすいまち</h3>
@@ -199,7 +200,9 @@
             <li id="book-1">『小出市の地質と歴史』 - 小出市史編纂委員会</li>
             <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
             <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
-          </ul>
+            <br>
+          </ul>資料室は<a href="/archive.html" class="btn">こちら</a></p>
+          <br>
 
           <div class="library-notice">
             <h4>【ご注意】</h4>
@@ -269,10 +272,10 @@
 
           <!-- 異変報告エリア（ゲーム用） -->
           <div class="game-report-section">
-            <h2>異変を報告する</h2> 
+            <h2>情報提供</h2> 
             <div class="report-box">
-              <button id="btn-anomaly" class="btn btn-danger btn-large">異変がある</button>
-              <button id="btn-normal" class="btn btn-primary btn-large">異変はない</button>
+              <button id="btn-anomaly" class="btn btn-danger btn-large">異変を報告する</button>
+              <button id="btn-normal" class="btn btn-primary btn-large">何も異常はなかった</button>
             </div>
             <div class="status-display">
               <span>進行状況: 階層 <strong id="current-step">0</strong> / 8</span>
