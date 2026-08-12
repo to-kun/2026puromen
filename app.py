@@ -9,12 +9,12 @@ def index():
     return render_template("index.html", title="トップページ", message="こんにちは！")
 
 # ページ追加：アバウトページ（直書きテキストを返す例）
-@app.route("/about")
+@app.route("/about/")
 def about():
     return "<h1>アバウトページです</h1><a href='/'>トップへ戻る</a>"
 
 # ページ追加：動的なURLパラメータを受け取る例
-@app.route("/user/<username>")
+@app.route("/user/<username>/")
 def user_profile(username):
     return f"<h1>{username} さんのマイページ</h1>"
 
