@@ -13,6 +13,7 @@ def user_profile():
 
 # 404エラーが発生してもビルドを中断せずに無視する設定（開発中の場合）
 app.config['FREEZER_IGNORE_404_NOT_FOUND'] = True
+app.config['FREEZER_RELATIVE_URLS'] = True
 
 if __name__ == "__main__":
     freezer.freeze()
