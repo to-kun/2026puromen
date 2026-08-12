@@ -1,6 +1,8 @@
 from flask_frozen import Freezer
 from app import app
 
+app.config['FREEZER_DESTINATION'] = 'docs'
+
 freezer = Freezer(app)
 
 # 動的ルート（/user/<username>）のためのパラメータを指定
