@@ -112,6 +112,34 @@ body {
   padding: 12px 20px;
 }
 
+/* ナビゲーションのリスト全体をFlexコンテナにする */
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.main-nav li {
+  flex: 1;
+  text-align: center;
+}
+
+/* 報告・お問い合わせタブを囲む li だけ指定 */
+.main-nav li:has(.nav-tab-report) {
+  flex: none;      /* 幅の自動伸縮をオフにする */
+  width: 180px;    /* 固定したい幅（お好みで調整OK） */
+}
+
+.main-nav a.nav-tab {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
 .logo-area {
   display: flex;
   align-items: baseline;
@@ -336,6 +364,123 @@ body {
     flex-direction: column;
   }
 }
+
+* 報告・お問い合わせセクション全体構造 */
+.report-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* お問い合わせフォームデザイン */
+.contact-section {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.toiawase-form .form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.toiawase-form label {
+  display: block;
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: #333333;
+}
+
+.toiawase-form .form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.toiawase-form .form-control:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+.btn-submit {
+  width: 100%;
+  background-color: #4a5568;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #2d3748;
+}
+
+/* 異変報告エリア（ゲーム要素） */
+.game-report-section {
+  background-color: #ffffff;
+  border: 2px solid #3182ce;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.game-report-section h2 {
+  margin-top: 0;
+  color: #2b6cb0;
+}
+
+.report-desc {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 20px;
+}
+
+.report-box {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.btn-large {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #e53e3e;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #c53030;
+}
+
+.status-display {
+  font-size: 1rem;
+  color: #4a5568;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
 
 /* ==========================================
    フッター

@@ -49,6 +49,7 @@
           <li><a href="#" class="nav-tab" data-tab="shicho">市長の部屋</a></li>
           <li><a href="#" class="nav-tab" data-tab="life">くらし・手続き</a></li>
           <li><a href="#" class="nav-tab" data-tab="edu">教育・図書館</a></li>
+          <li><a href="#" class="nav-tab" data-tab="shight">観光</a></li>
           <li><a href="#" class="nav-tab" data-tab="staff">職員紹介</a></li>
           <li><a href="#" class="nav-tab nav-tab-report" data-tab="report">報告・お問い合わせ</a></li>
         </ul>
@@ -207,7 +208,14 @@
         </div>
       </section>
 
-      <!-- 5. 職員紹介 -->
+
+      <!-- 5. 観光 -->
+      <section id="tab-shight" class="tab-content hidden">
+
+      </section>
+
+
+      <!-- 6. 職員紹介 -->
       <section id="tab-staff" class="tab-content hidden">
         <h2>市政を支える職員たち</h2>
         <p>市民の皆様のお役に立てるよう、各部署で日々業務に取り組んでいます。</p>
@@ -233,19 +241,46 @@
         </div>
       </section>
 
-      <!-- 6. 報告・お問い合わせ -->
+<!-- 7. 報告・お問い合わせ -->
       <section id="tab-report" class="tab-content hidden">
-        <h2>異変の有無を報告する</h2> 
-        <div class="report-box">
-          <button id="btn-anomaly" class="btn btn-danger btn-large">異変がある</button>
-          <button id="btn-normal" class="btn btn-primary btn-large">異変はない</button>
-        </div>
-        <div class="status-display">
-          <span>進行状況: 階層 <strong id="current-step">0</strong> / 8</span>
+        <div class="report-container">
+          <!-- お問い合わせフォームエリア -->
+          <div class="contact-section">
+            <h2 id="toiawase-title">お問い合わせ</h2>
+            <form class="toiawase-form" onsubmit="return false;">
+              <div class="form-group">
+                <label for="toiawase-input-name" id="toiawase-name">お名前</label>
+                <input type="text" id="toiawase-input-name" class="form-control" placeholder="例：小出 太郎">
+              </div>
+
+              <div class="form-group">
+                <label for="toiawase-input-mail" id="toiawase-mail">メールアドレス</label>
+                <input type="email" id="toiawase-input-mail" class="form-control" placeholder="例：example@city.koide.lg.jp">
+              </div>
+
+              <div class="form-group">
+                <label for="toiawase-input-text" id="toiawase-text">お問い合わせ内容</label>
+                <textarea id="toiawase-input-text" class="form-control" rows="5" placeholder="ご意見・ご質問をご記入ください"></textarea>
+              </div>
+
+              <button type="button" id="toiawase-push" class="btn-submit">送信する</button>
+            </form>
+          </div>
+
+          <!-- 異変報告エリア（ゲーム用） -->
+          <div class="game-report-section">
+            <h2>異変を報告する</h2> 
+            <div class="report-box">
+              <button id="btn-anomaly" class="btn btn-danger btn-large">異変がある</button>
+              <button id="btn-normal" class="btn btn-primary btn-large">異変はない</button>
+            </div>
+            <div class="status-display">
+              <span>進行状況: 階層 <strong id="current-step">0</strong> / 8</span>
+            </div>
+          </div>
         </div>
       </section>
 
-    </main>
 
     <!-- フッター -->
     <footer class="site-footer">
