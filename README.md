@@ -61,7 +61,7 @@ python app.py
 
 ブラウザで http://127.0.0.1:5000 にアクセスします。
 
-###静的ファイルのビルド（GitHub Pages等へのデプロイ）
+### 静的ファイルのビルド（GitHub Pages等へのデプロイ）
 
 freeze.py を実行して build/ ディレクトリに静的HTML/CSS/JSを出力します。
 
