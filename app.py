@@ -11,7 +11,7 @@ def index():
 # ページ追加：アバウトページ（直書きテキストを返す例）
 @app.route("/about/")
 def about():
-    return "<h1>アバウトページです</h1><a href='./'>トップへ戻る</a>"
+    return "<h1>アバウトページです</h1><a href='../'>トップへ戻る</a>"
 
 # ページ追加：動的なURLパラメータを受け取る例
 @app.route("/user/<username>/")
