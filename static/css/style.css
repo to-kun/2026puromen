@@ -1,50 +1,329 @@
-body {
+/* ==========================================
+   基本リセット・全体設定
+   ========================================== */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding-top: 150px; 
-  padding-bottom: 80px;
-  font-family: sans-serif;
+  padding: 0;
 }
 
-/* ヘッダー固定 */
+body {
+  font-family: "Hiragino Sans", "Meiryo", "Yu Gothic", sans-serif;
+  line-height: 1.6;
+  background-color: #f4f6f8;
+  color: #333;
+  padding-top: 140px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.screen {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.screen.hidden {
+  display: none !important;
+}
+
+
+/* トランジション画面（画面A）のスタイル */
+#screen-transition {
+  background-color: #111827; /* ダークグレーのシンプルな背景 */
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2000;
+}
+
+.transition-content h1 {
+  font-size: 4rem; /* 階層数を大きく表示 */
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #f7fafc;
+}
+
+.transition-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #a0aec0;
+}
+
+#btn-start-stage {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+}
+
+/* ==========================================
+   官公庁風ヘッダー（固定表示）
+   ========================================== */
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: #003366;
-  color: white;
-  padding: 10px;
-  z-index: 100;
+  background-color: #0a2540; /* 信頼感のある深紺色 */
+  color: #ffffff;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.site-header button {
-  padding: 8px 16px;
-  margin-right: 5px;
+/* 上段：ロゴ＆ユーティリティエリア */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 20px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: baseline;
+}
+
+.city-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.sub-title {
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 10px;
+  color: #d0d7de;
+}
+
+.header-utility {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 0.85rem;
+}
+
+#font-size-btn {
+  background-color: #ffffff;
+  color: #0a2540;
+  border: 1px solid #ffffff;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 3px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.site-header button.active {
-  background: #ffcc00;
+#font-size-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.main-nav a.nav-tab-report {
+  background-color: #742a2a;
+}
+.main-nav a.nav-tab-report:hover {
+  background-color: #9b2c2c;
+}
+
+/* 報告画面内のボタンエリア */
+.report-box {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.btn-large {
+  padding: 15px 30px;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
-/* フッター固定 */
-.site-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
+/* 下段：メインナビゲーション（タブ） */
+.main-nav {
+  background-color: #103459; /* 上段よりわずかに明るい紺色 */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* SPA表示切り替え */
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.main-nav li {
+  flex: 1;
+}
+
+.main-nav a {
+  display: block;
+  padding: 12px 10px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 4px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.main-nav a:hover {
+  background-color: #1a4473;
+}
+
+/* アクティブ時の強調（金黄色の太下線） */
+.main-nav a.active {
+  background-color: #1a4473;
+  border-bottom: 4px solid #f2b705;
+  color: #ffffff;
+}
+
+/* ==========================================
+   メインコンテンツエリア
+   ========================================== */
+
+.main-content {
+  max-width: 1000px;
+  margin: 0 auto 40px auto; /* 下側に少し余白を作る */
+  padding: 30px 20px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  
+  /* コンテンツが少ない時でもフッターを下に移動させる */
+  flex: 1;
+}
+
+/* SPA 表示/非表示制御 */
 .tab-content {
   display: block;
 }
 
 .tab-content.hidden {
+  display: none !important;
+}
+
+/* お知らせセクション全体 */
+.news-section {
+  margin-bottom: 30px;
+}
+
+/* 「重要なお知らせ」の見出し */
+.news-section h2 {
+  margin-top: 0;      /* 上の余白をリセット */
+  margin-bottom: 0 !important; /* 見出しとボックスの間の余白を調整 */
+}
+
+/* スクロール枠本体 */
+.news-scroll-box {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 10px 15px;
+  margin: 0 !important;          /* 枠自体の上下不要なマージンを消す */
+}
+
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.news-list li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px dotted #e2e8f0;
+}
+
+.news-list li:last-child {
+  border-bottom: none;
+}
+
+.news-date {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #4a5568;
+  white-space: nowrap;
+}
+
+.news-list a {
+  color: #1a202c;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.news-list a:hover {
+  text-decoration: underline;
+  color: #2b6cb0;
+}
+
+/* 見出しスタイル */
+.main-content h2 {
+  font-size: 1.4rem;
+  color: #0a2540;
+  padding-left: 12px;
+  border-left: 5px solid #0a2540;
+  margin-bottom: 70px;
+}
+
+/* ==========================================
+   フッター
+   ========================================== */
+.site-footer {
+  /* position: fixed や bottom の指定を削除 */
+  width: 100%;
+  background-color: #2d3748;
+  color: #cbd5e0;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+  margin-top: auto; /* flexアイテムとして最下部に配置 */
+}
+
+.status-display {
+  font-size: 1rem;
+}
+
+.button-group .btn {
+  padding: 8px 18px;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+
+.btn-primary {
+  background-color: #2b6cb0;
+  color: #ffffff;
+}
+
+.btn-danger {
+  background-color: #c53030;
+  color: #ffffff;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.screen.hidden {
   display: none !important;
 }

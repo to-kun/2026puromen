@@ -2,42 +2,217 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>テスト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小出市役所 公式ホームページ</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
+  <!-- ==========================================
+       画面A: トランジション画面（階層表示・クリア・ルール）
+       ========================================== -->
+  <div id="screen-transition" class="screen">
+    <div class="transition-content">
+      <h1 id="transition-title">階層 0</h1>
+      <p id="transition-message">異変がないか、ページ内を注意深く確認してください。</p>
+      <button id="btn-start-stage" class="btn btn-primary">探索を開始する</button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       画面B: 異変探し画面（市役所Webサイト）
+       ========================================== -->
+  <div id="screen-game" class="screen hidden">
+
+  <!-- 官公庁風ヘッダー -->
   <header class="site-header">
-    <h1>神陵市役所</h1>
-    <nav>
-      <button class="nav-tab active" data-tab="top">トップ</button>
-      <button class="nav-tab" data-tab="life">くらし</button>
-      <button class="nav-tab" data-tab="library">図書館</button>
+    <div class="header-top">
+      <div class="logo-area">
+        <h1 id="city-name" class="city-title">小出市 <span class="sub-title">Koide City</span></h1>
+      </div>
+      <div class="header-utility">
+        <span id="header-date">令和8年8月12日 (水)</span>
+        <button id="font-size-btn">文字サイズ：標準</button>
+      </div>
+    </div>
+
+    <!-- 上部ナビゲーションタブ -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#" class="nav-tab active" data-tab="top">トップページ</a></li>
+        <li><a href="#" class="nav-tab" data-tab="shicho">市長の部屋</a></li>
+        <li><a href="#" class="nav-tab" data-tab="life">くらし・手続き</a></li>
+        <li><a href="#" class="nav-tab" data-tab="edu">教育・図書館</a></li>
+        <li><a href="#" class="nav-tab" data-tab="staff">職員紹介</a></li>
+        <li><a href="#" class="nav-tab nav-tab-report" data-tab="report">報告・お問い合わせ</a></li>
+      </ul>
     </nav>
   </header>
 
+  <!-- メインコンテンツエリア (SPA) -->
   <main class="main-content">
-    <section id="tab-top" class="tab-content">
-      <h2>トップページ</h2>
-      <p>ここはトップページです。</p>
-      <div style="height: 1000px; background: #eee;">（スクロール確認用ダミー）</div>
+
+    <!-- 1. トップページ -->
+    <section id="tab-top" class="tab-content active">
+      <div class="hero-banner">
+        <img id="hero-img" src="{{ url_for('static', filename='images/building_front.png') }}" alt="小出市の豊かな自然と街並み">
+        <p id="hero-catch" class="hero-text">人と自然が調和する、安心と信頼のまち・小出</p>
+      </div>
+
+      <br></br>
+      <div class="news-section">
+  <h2>重要なお知らせ</h2>
+  
+  <!-- スクロール可能な枠 -->
+  <div class="news-scroll-box">
+    <ul class="news-list">
+      <li>
+        <span class="news-date">2026.08.10</span>
+        <a href="#" id="news-item-1">【防災】夏季の集中豪雨に伴う避難勧告の発令基準について</a>
+      </li>
+      <li>
+        <span class="news-date">2026.08.01</span>
+        <a href="#" id="news-item-2">マイナンバーカード出張申請窓口の開設について</a>
+      </li>
+      <li>
+        <span class="news-date">2026.07.25</span>
+        <a href="#" id="news-item-3">小出市総合体育館のリニューアル工事終了に伴う利用再開</a>
+      </li>
+      <li>
+        <span class="news-date">2026.07.15</span>
+        <a href="#" id="news-item-4">令和8年度 市立小中学校の改修工事に伴う利用制限について</a>
+      </li>
+      <li>
+        <span class="news-date">2026.07.01</span>
+        <a href="#" id="news-item-5">市役所本庁舎の夜間停電点検の実施について</a>
+      </li>
+    </ul>
+  </div>
+  </div>
+
+      <div class="banner-group">
+        <div class="banner-item" id="banner-1">小出市公式防災アプリ配信中</div>
+        <div class="banner-item" id="banner-2">ふるさと納税で小出市を応援しよう</div>
+      </div>
     </section>
 
+
+    <!-- 2. くらし・手続き -->
     <section id="tab-life" class="tab-content hidden">
-      <h2>くらし・手続き</h2>
-      <p>ここはくらしのページです。</p>
+      <h2>くらし・手続きガイド</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3>住民票・戸籍・印鑑登録</h3>
+          <p id="life-text-1">転入・転出の手続き、各種証明書の発行案内です。窓口の混雑状況をご確認いただけます。</p>
+        </div>
+        <div class="guide-card">
+          <h3>ごみ・リサイクル</h3>
+          <p id="life-text-2">家庭ごみの分別方法および収集カレンダー。大型ごみの戸別収集申し込みはこちら。</p>
+        </div>
+        <div class="guide-card">
+          <h3>税金・国民健康保険</h3>
+          <p id="life-text-3">市県民税、固定資産税の納付期限および口座振替のお手続きについて。</p>
+        </div>
+        <div class="guide-card">
+          <h3>子育て・福祉</h3>
+          <p id="life-text-4">児童手当の支給申請、保育所入所案内、高齢者支援サービスの一覧。</p>
+        </div>
+      </div>
     </section>
 
-    <section id="tab-library" class="tab-content hidden">
-      <h2>市立図書館</h2>
-      <p>ここは図書館のページです。</p>
+
+    <!-- 3. 教育・図書館 -->
+    <section id="tab-edu" class="tab-content hidden">
+      <h2>市立学校一覧</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3>住民票・戸籍・印鑑登録</h3>
+          <p id="life-text-1">転入・転出の手続き、各種証明書の発行案内です。窓口の混雑状況をご確認いただけます。</p>
+        </div>
+        <div class="guide-card">
+          <h3>ごみ・リサイクル</h3>
+          <p id="life-text-2">家庭ごみの分別方法および収集カレンダー。大型ごみの戸別収集申し込みはこちら。</p>
+        </div>
+        <div class="guide-card">
+          <h3>税金・国民健康保険</h3>
+          <p id="life-text-3">市県民税、固定資産税の納付期限および口座振替のお手続きについて。</p>
+        </div>
+        <div class="guide-card">
+          <h3>子育て・福祉</h3>
+          <p id="life-text-4">児童手当の支給申請、保育所入所案内、高齢者支援サービスの一覧。</p>
+        </div><br></br>
+      <h2>神陵市立中央図書館</h2>
+      <div class="library-info">
+        <p id="lib-status">本日の開館状況：<strong>通常開館（9:00 - 19:00）</strong></p>
+        
+        <h3>新着図書のご案内</h3>
+        <ul class="book-list">
+          <li id="book-1">『神陵市の地質と歴史』 - 神陵市史編纂委員会</li>
+          <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
+          <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
+        </ul>
+
+        <div class="library-notice">
+          <h4>【ご注意】</h4>
+          <p id="lib-warning">館内での静寂保持にご協力ください。3階閲覧室は現在改修工事中のため立ち入り禁止です。</p>
+        </div>
+      </div>
     </section>
+
+
+    <!-- 4. 職員紹介 -->
+    <section id="tab-staff" class="tab-content hidden">
+      <h2>市政を支える職員たち</h2>
+      <p>市民の皆様のお役に立てるよう、各部署で日々業務に取り組んでいます。</p>
+      
+      <div class="staff-grid">
+        <div class="staff-card" id="staff-card-1">
+          <img id="staff-img-1" src="{{ url_for('static', filename='images/staff1.jpg') }}" alt="市民課 職員">
+          <h3 id="staff-name-1">市民課：佐藤 健一</h3>
+          <p id="staff-desc-1">窓口での親切・丁寧な対応を心がけています。お気軽にお声がけください。</p>
+        </div>
+
+        <div class="staff-card" id="staff-card-2">
+          <img id="staff-img-2" src="{{ url_for('static', filename='images/staff2.jpg') }}" alt="防災課 職員">
+          <h3 id="staff-name-2">防災課：鈴木 裕子</h3>
+          <p id="staff-desc-2">地域の皆様の安全を守るため、防犯・防災体制の強化に努めています。</p>
+        </div>
+
+        <div class="staff-card" id="staff-card-3">
+          <img id="staff-img-3" src="{{ url_for('static', filename='images/staff3.jpg') }}" alt="広報課 職員">
+          <h3 id="staff-name-3">広報課：高橋 誠</h3>
+          <p id="staff-desc-3">小出市の魅力を全国へ発信するため、広報誌やWebサイトの更新を担当しています。</p>
+        </div>
+      </div>
+    </section>
+
+  <section id="tab-report" class="tab-content hidden">
+    <h2>異変の有無を報告する</h2> 
+    <div class="report-box">
+      <button id="btn-anomaly" class="btn btn-danger btn-large">異変がある</button>
+      <button id="btn-normal" class="btn btn-primary btn-large">異変はない</button>
+    </div>
+    <div class="status-display">
+      <span>進行状況: 階層 <strong id="current-step">0</strong> / 8</span>
+    </div>
+  </section>
+
+
   </main>
 
+  <!-- フッター -->
   <footer class="site-footer">
-    <p>固定フッター</p>
+    <div class="footer-info">
+      <p id="footer-address">小出市役所 〒000-0000 小出市中央町1丁目1番</p>
+      <p id="footer-phone">電話番号：0123-62-0080（代表）0123-62-0081（FAX）</p>
+      <p id="fooder-open">開庁時間：平日8:30〜17:15  土曜日9:00～12:00(市民課のみ)
+    </div>
+    <p class="copyright">&copy; Koide City. All Rights Reserved.</p>
   </footer>
-
+</div>
+  <!-- JavaScript群 -->
+<script src="{{ url_for('static', filename='js/anomalies.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/gameLogic.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
