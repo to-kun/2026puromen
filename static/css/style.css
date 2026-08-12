@@ -58,9 +58,34 @@ body {
   color: #a0aec0;
 }
 
+.transition-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 #btn-start-stage {
   padding: 12px 30px;
   font-size: 1.1rem;
+}
+
+.btn-secondary {
+  background-color: #4a5568;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #718096;
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* ==========================================
@@ -214,17 +239,6 @@ body {
   display: none !important;
 }
 
-/* お知らせセクション全体 */
-.news-section {
-  margin-bottom: 30px;
-}
-
-/* 「重要なお知らせ」の見出し */
-.news-section h2 {
-  margin-top: 0;      /* 上の余白をリセット */
-  margin-bottom: 0 !important; /* 見出しとボックスの間の余白を調整 */
-}
-
 /* スクロール枠本体 */
 .news-scroll-box {
   max-height: 180px;
@@ -233,7 +247,7 @@ body {
   border-radius: 4px;
   background-color: #ffffff;
   padding: 10px 15px;
-  margin: 0 !important;          /* 枠自体の上下不要なマージンを消す */
+  margin: 0 !important;
 }
 
 .news-list {
@@ -272,13 +286,25 @@ body {
   color: #2b6cb0;
 }
 
-/* 見出しスタイル */
-.main-content h2 {
-  font-size: 1.4rem;
-  color: #0a2540;
-  padding-left: 12px;
-  border-left: 5px solid #0a2540;
-  margin-bottom: 70px;
+.tableheader {
+  text-align: left;
+  padding: 20px;
+  border-bottom-color: #2710d5;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  width: 100px;
+}
+
+.tableheader-first {
+  text-align: left;
+  padding: 20px;
+  border-bottom-color: #2710d5;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  width: 100px; 
+  border-top-color: #2710d5;
+  border-bottom-width: 1px;
+  border-top-style: solid;
 }
 
 /* ==========================================

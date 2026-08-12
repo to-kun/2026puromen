@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   newsDateSettings.forEach(setting => {
     const newsLinkEl = document.getElementById(setting.id);
     if (newsLinkEl) {
-      // <a>タグの親要素(li)から .news-date を探して更新
       const dateSpan = newsLinkEl.parentElement.querySelector('.news-date');
       if (dateSpan) {
         dateSpan.textContent = getFormattedDate(setting.daysAgo);
@@ -76,6 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  const btnReviewStage = document.getElementById('btn-review-stage');
+  if (btnReviewStage) {
+    btnReviewStage.addEventListener('click', () => {
+      if (window.game) {
+        window.game.startReview();
+      }
+    });
+  }
+
 
   // 3. ゲーム操作ボタン（異変あり / なし）のイベント登録
   const btnAnomaly = document.getElementById('btn-anomaly');
