@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
+  <meta charset="UTF-8">
+  <title>テスト</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>{{ message }}</h1>
-    <a href="./about/">アバウトページへ</a>
+
+  <header class="site-header">
+    <h1>神陵市役所</h1>
+    <nav>
+      <button class="nav-tab active" data-tab="top">トップ</button>
+      <button class="nav-tab" data-tab="life">くらし</button>
+      <button class="nav-tab" data-tab="library">図書館</button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <section id="tab-top" class="tab-content">
+      <h2>トップページ</h2>
+      <p>ここはトップページです。</p>
+      <div style="height: 1000px; background: #eee;">（スクロール確認用ダミー）</div>
+    </section>
+
+    <section id="tab-life" class="tab-content hidden">
+      <h2>くらし・手続き</h2>
+      <p>ここはくらしのページです。</p>
+    </section>
+
+    <section id="tab-library" class="tab-content hidden">
+      <h2>市立図書館</h2>
+      <p>ここは図書館のページです。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>固定フッター</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
