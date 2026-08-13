@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>小出市役所 公式ホームページ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-  <!-- ==========================================
-       画面A: トランジション画面（階層表示・クリア・ルール）
-       ========================================== -->
+  <!-- 画面A: トランジション画面 -->
   <div id="screen-transition" class="screen">
     <div class="transition-content">
       <h1 id="transition-title">階層 0</h1>
@@ -20,17 +17,15 @@
       <p id="transition-first">各種リンクは押せないようになっています。また、「報告・お問い合わせ」から次へ進めます。</p>
       <div class="transition-buttons">
         <button id="btn-start-stage" class="btn btn-primary">探索を開始する</button>
-        <button id="btn-review-stage" class="btn btn-secondary" hidden>直前のページを振り返る</button>
+        <!-- hidden属性を排除し、CSSクラスhiddenで制御できるように修正 -->
+        <button id="btn-review-stage" class="btn btn-secondary hidden">直前のページを振り返る</button>
       </div>
     </div>
   </div>
 
-  <!-- ==========================================
-       画面B: 異変探し画面（市役所Webサイト）
-       ========================================== -->
+  <!-- 画面B: 異変探し画面 -->
   <div id="screen-game" class="screen hidden">
 
-    <!-- 官公庁風ヘッダー -->
     <header class="site-header">
       <div class="header-top">
         <div class="logo-area">
@@ -42,7 +37,6 @@
         </div>
       </div>
 
-      <!-- 上部ナビゲーションタブ -->
       <nav class="main-nav">
         <ul>
           <li><a href="#" class="nav-tab active" data-tab="top">トップページ</a></li>
@@ -56,7 +50,6 @@
       </nav>
     </header>
 
-    <!-- メインコンテンツエリア (SPA) -->
     <main class="main-content">
 
       <!-- 1. トップページ -->
@@ -68,8 +61,6 @@
 
         <div class="news-section">
           <h2>重要なお知らせ</h2>
-          
-          <!-- スクロール可能な枠 -->
           <div class="news-scroll-box">
             <ul class="news-list">
               <li>
@@ -78,7 +69,7 @@
               </li>
               <li>
                 <span class="news-date">2026.08.01</span>
-                <a href="#" id="news-item-2">マイナンバーカード出張申請窓口の開設について</a>
+                <a href="#" id="news-item-2">個人番号カード出張申請窓口の開設について</a>
               </li>
               <li>
                 <span class="news-date">2026.07.25</span>
@@ -126,7 +117,7 @@
               <th class="tableheader">趣味</th>
               <td class="cell">ギター</td>
             </tr>
-        </table>
+          </table>
         </div><br>
 
         <div class="city-introduce">
@@ -140,18 +131,17 @@
 
         <div class="card-list" id="city-symbol">
           <h2 id="city-symbol-info">私の目指す小出市</h2>
-            <article class="card">
-                <img class="card__image" id="card-symbol-img1" src="{{ url_for('static', filename='images/symbol1.png') }}" alt="住みやすい">
-                <h3 class="card__title" id="card-symbol-title1">住みやすいまち</h3>
-                <p class="card__text" id="card-symbol-text1">ddddddd</p>
-            </article>
-            <article class="card">
-                <img class="card__image" id="card-symbol-img2" src="{{ url_for('static', filename='images/symbol2.png') }}" alt="みんなに優しい">
-                <h3 class="card__title" id="card-symbol-title2">みんなに優しいまち</h3>
-                <p class="card__text" id="card-symbol-text2">dddddddd</p>
-            </article>
+          <article class="card">
+            <img class="card__image" id="card-symbol-img1" src="{{ url_for('static', filename='images/symbol1.png') }}" alt="住みやすい">
+            <h3 class="card__title" id="card-symbol-title1">住みやすいまち</h3>
+            <p class="card__text" id="card-symbol-text1">ddddddd</p>
+          </article>
+          <article class="card">
+            <img class="card__image" id="card-symbol-img2" src="{{ url_for('static', filename='images/symbol2.png') }}" alt="みんなに優しい">
+            <h3 class="card__title" id="card-symbol-title2">みんなに優しいまち</h3>
+            <p class="card__text" id="card-symbol-text2">dddddddd</p>
+          </article>
         </div>
-
       </section>
 
       <!-- 3. くらし・手続き -->
@@ -163,7 +153,7 @@
             <p id="life-text-1">転入・転出の手続き、各種証明書の発行案内です。窓口の混雑状況をご確認いただけます。</p>
           </div>
           <div class="guide-card">
-            <h3>ごごみ・リサイクル</h3>
+            <h3>ごみ・リサイクル</h3>
             <p id="life-text-2">家庭ごみの分別方法および収集カレンダー。大型ごみの戸別収集申し込みはこちら。</p>
           </div>
           <div class="guide-card">
@@ -200,8 +190,8 @@
             <li id="book-1">『小出市の地質と歴史』 - 小出市史編纂委員会</li>
             <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
             <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
-            <br>
-          </ul>資料室は<a href="/archive.html" class="btn">こちら</a></p>
+          </ul>
+          <p>資料室は<a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">こちら</a></p>
           <br>
 
           <div class="library-notice">
@@ -211,12 +201,11 @@
         </div>
       </section>
 
-
       <!-- 5. 観光 -->
       <section id="tab-shight" class="tab-content hidden">
-
+        <h2>観光情報</h2>
+        <p>小出市の名所やイベント情報をお届けします。</p>
       </section>
-
 
       <!-- 6. 職員紹介 -->
       <section id="tab-staff" class="tab-content hidden">
@@ -244,10 +233,9 @@
         </div>
       </section>
 
-<!-- 7. 報告・お問い合わせ -->
+      <!-- 7. 報告・お問い合わせ -->
       <section id="tab-report" class="tab-content hidden">
         <div class="report-container">
-          <!-- お問い合わせフォームエリア -->
           <div class="contact-section">
             <h2 id="toiawase-title">お問い合わせ</h2>
             <form class="toiawase-form" onsubmit="return false;">
@@ -270,7 +258,6 @@
             </form>
           </div>
 
-          <!-- 異変報告エリア（ゲーム用） -->
           <div class="game-report-section">
             <h2>情報提供</h2> 
             <div class="report-box">
@@ -284,8 +271,8 @@
         </div>
       </section>
 
+    </main>
 
-    <!-- フッター -->
     <footer class="site-footer">
       <div class="footer-info">
         <p id="footer-address">小出市役所 〒000-0000 小出市中央町1丁目1番</p>
@@ -297,9 +284,10 @@
 
   </div>
 
-  <!-- JavaScript群 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
   <script src="{{ url_for('static', filename='js/anomalies.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/gamelogic.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/gameLogic.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
