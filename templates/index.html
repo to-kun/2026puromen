@@ -17,7 +17,6 @@
       <p id="transition-first">各種リンクは押せないようになっています。また、「報告・お問い合わせ」から次へ進めます。</p>
       <div class="transition-buttons">
         <button id="btn-start-stage" class="btn btn-primary">探索を開始する</button>
-        <!-- hidden属性を排除し、CSSクラスhiddenで制御できるように修正 -->
         <button id="btn-review-stage" class="btn btn-secondary hidden">直前のページを振り返る</button>
       </div>
     </div>
@@ -146,24 +145,33 @@
 
       <!-- 3. くらし・手続き -->
       <section id="tab-life" class="tab-content hidden">
-        <h2>くらし・手続きガイド</h2>
+        <h2>くらし・手続き</h2>
         <div class="guide-grid">
+          <article class="card">
           <div class="guide-card">
-            <h3>住民票・戸籍・印鑑登録</h3>
-            <p id="life-text-1">転入・転出の手続き、各種証明書の発行案内です。窓口の混雑状況をご確認いただけます。</p>
+            <img class="card__image" id="life-img-1" src="{{ url_for('static', filename='images/life-text-1.png') }}" alt="住民票・戸籍・印鑑登録">
+            <h3 class="card__title" id="life-title-1"><a href="#">住民票・戸籍・印鑑登録</a></h3>
+            <p class="card__text" id="life-text-1">転入・転出の手続き、各種証明書の発行案内です。窓口の混雑状況をご確認いただけます。</p>
           </div>
+
           <div class="guide-card">
-            <h3>ごみ・リサイクル</h3>
-            <p id="life-text-2">家庭ごみの分別方法および収集カレンダー。大型ごみの戸別収集申し込みはこちら。</p>
+            <img class="card__image" id="life-img-2" src="{{ url_for('static', filename='images/life-text-2.png') }}" alt="ごみ・リサイクル">
+            <h3 class="card__title" id="life-title-2"><a href="#">ごみ・リサイクル</a></h3>
+            <p class="card__text" id="life-text-2">家庭ごみの分別方法および収集カレンダー。大型ごみの戸別収集申し込みはこちら。</p>
           </div>
+
           <div class="guide-card">
-            <h3>税金・国民健康保険</h3>
-            <p id="life-text-3">市県民税、固定資産税の納付期限および口座振替のお手続きについて。</p>
+            <img class="card__image" id="life-img-3" src="{{ url_for('static', filename='images/life-text-3.png') }}" alt="税金・国民健康保険">
+            <h3 class="card__title" id="life-title-3"><a href="#">税金・国民健康保険</a></h3>
+            <p class="card__text" id="life-text-3">市道民税、固定資産税の納付期限および口座振替のお手続きについて。</p>
           </div>
+
           <div class="guide-card">
-            <h3>子育て・福祉</h3>
-            <p id="life-text-4">児童手当の支給申請、保育所入所案内、高齢者支援サービスの一覧。</p>
+            <img class="card__image" id="life-img-4" src="{{ url_for('static', filename='images/life-text-4.png') }}" alt="子育て・福祉">
+            <h3 class="card__title" id="life-title-4"><a href="#">子育て・福祉</a></h3>
+            <p class="card__text" id="life-text-4">児童手当の支給申請、保育所入所案内、高齢者支援サービスの一覧。</p>
           </div>
+          </article>
         </div>
       </section>
 
@@ -172,14 +180,9 @@
         <h2>市立学校一覧</h2>
         <div class="guide-grid">
           <div class="guide-card">
-            <h3>市立小学校</h3>
-            <p id="edu-text-1">市内小学校の学区一覧および通学路の安全対策に関する情報です。</p>
+            <h3>市立小中学校</h3>
+            <p id="edu-text-1">市内小学校の情報です。</p>
           </div>
-          <div class="guide-card">
-            <h3>市立中学校</h3>
-            <p id="edu-text-2">部活動の基本方針および各中学校の教育課程のご案内です。</p>
-          </div>
-        </div>
 
         <h2>小出市立中央図書館</h2>
         <div class="library-info">
@@ -191,8 +194,7 @@
             <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
             <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
           </ul>
-          <p>資料室は<a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">こちら</a></p>
-          <br>
+          <p><a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">資料室はこちら</a></p>
 
           <div class="library-notice">
             <h4>【ご注意】</h4>
@@ -214,21 +216,21 @@
         
         <div class="staff-grid">
           <div class="staff-card" id="staff-card-1">
-            <img id="staff-img-1" src="{{ url_for('static', filename='images/staff1.jpg') }}" alt="市民課 職員">
-            <h3 id="staff-name-1">市民課：佐藤 健一</h3>
-            <p id="staff-desc-1">窓口での親切・丁寧な対応を心がけています。お気軽にお声がけください。</p>
+            <img id="staff-img-1" src="{{ url_for('static', filename='images/staff1.jpg') }}" alt="広報課長">
+            <h3 id="staff-name-1">広報課長：中島 らまと</h3>
+            <p id="staff-desc-1">小出市の魅力を全国へ発信するため、広報誌やWebサイトの更新を担当しています。</p>
           </div>
 
           <div class="staff-card" id="staff-card-2">
-            <img id="staff-img-2" src="{{ url_for('static', filename='images/staff2.jpg') }}" alt="防災課 職員">
-            <h3 id="staff-name-2">防災課：鈴木 裕子</h3>
-            <p id="staff-desc-2">地域の皆様の安全を守るため、防犯・防災体制の強化に努めています。</p>
+            <img id="staff-img-2" src="{{ url_for('static', filename='images/staff2.jpg') }}" alt="福祉課長">
+            <h3 id="staff-name-2">福祉課長：鈴木 ひろや</h3>
+            <p id="staff-desc-2">地域の皆様の労働・福祉関係のご相談を受け付けています。</p>
           </div>
 
           <div class="staff-card" id="staff-card-3">
-            <img id="staff-img-3" src="{{ url_for('static', filename='images/staff3.jpg') }}" alt="広報課 職員">
-            <h3 id="staff-name-3">広報課：高橋 誠</h3>
-            <p id="staff-desc-3">小出市の魅力を全国へ発信するため、広報誌やWebサイトの更新を担当しています。</p>
+            <img id="staff-img-3" src="{{ url_for('static', filename='images/staff3.jpg') }}" alt="市民課長">
+            <h3 id="staff-name-3">市民課長：内田 けいすけ</h3>
+            <p id="staff-desc-3">窓口での親切・丁寧な対応を心がけています。お気軽にお声がけください。</p>
           </div>
         </div>
       </section>
