@@ -481,6 +481,201 @@ body {
   margin-top: 12px;
 }
 
+/* カードを囲むコンテナをGrid（横並び）にする */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 自動で折り返し横並び */
+  gap: 20px; /* カード同士の間隔 */
+  margin-bottom: 30px;
+}
+
+/* 個々のカードスタイル */
+.guide-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-card .card__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.guide-card .card__title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.guide-card .card__text {
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+/* 画像（またはカード全体）の変化をなめらかにするアニメーション設定 */
+.card__image {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer; /* マウスカーソルをポインター（指マーク）にする */
+}
+
+/* マウスを乗せたとき（触ったとき）：少し浮き上がって影がつく */
+.card__image:hover {
+  transform: translateY(-4px) scale(1.02); /* 上に4px浮き、少しだけ拡大 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影をつけて立体感を出す */
+}
+
+/* 押したとき（クリック中）：下に沈む（押された感） */
+.card__image:active {
+  transform: translateY(2px) scale(0.98); /* 下に2px沈み、少し小さくなる */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影を薄く・小さくする */
+}
+
+/* 学校カード内のタイトル */
+.guide-card h3 {
+  font-size: 1.05rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2d3748;
+}
+
+/* 学校の連絡先・住所テキスト */
+.guide-card .card__text {
+  font-size: 0.85rem;
+  color: #4a5568;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+/* 図書館カード全体の枠組み */
+.library-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 10px;
+}
+
+/* 外観画像 */
+.library-card .card__image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+/* 住所・電話番号 */
+.library-address {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+/* 開館状況 */
+.library-status {
+  font-size: 1.05rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+/* 新着図書コーナー */
+.library-books h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #2d3748;
+}
+
+.book-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.book-list li {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #2d3748;
+}
+
+.archive-link-wrap {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* 注意事項エリア */
+.library-notice {
+  background-color: #fff5f5;
+  border-left: 4px solid #e53e3e;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.library-notice h4 {
+  font-size: 0.95rem;
+  color: #c53030;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.library-notice p {
+  font-size: 0.88rem;
+  color: #742a2a;
+  margin: 0;
+}
+
+/* 職員紹介のグリッドコンテナ */
+.staff-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 中央寄せ */
+  gap: 16px;              /* カード同士の余白を少し詰める */
+  max-width: 800px;       /* 全体の横幅を広げすぎない */
+  margin: 0 auto;         /* 中央配置 */
+}
+
+/* 個々の職員カード（コンパクト化） */
+.staff-card {
+  width: 220px;           /* 幅を小さく固定 */
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+/* 画像も小さめに調整 */
+.staff-card img {
+  width: 100%;
+  max-width: 150px;      /* 画像の最大幅を制限 */
+  height: 150px;         /* 正方形に揃える場合 */
+  object-fit: cover;
+  border-radius: 50%;     /* 丸型にする場合はこちら（四角が良い場合は消してください） */
+  margin: 0 auto 10px auto;
+  display: block;
+}
+
+.staff-card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: #2d3748;
+}
+
+.staff-card p {
+  font-size: 0.85rem;
+  color: #4a5568;
+  line-height: 1.4;
+  margin: 0;
+}
 
 /* ==========================================
    フッター

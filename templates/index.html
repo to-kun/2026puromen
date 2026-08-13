@@ -143,11 +143,10 @@
         </div>
       </section>
 
-      <!-- 3. くらし・手続き -->
+<!-- 3. くらし・手続き -->
       <section id="tab-life" class="tab-content hidden">
         <h2>くらし・手続き</h2>
         <div class="guide-grid">
-          <article class="card">
           <div class="guide-card">
             <img class="card__image" id="life-img-1" src="{{ url_for('static', filename='images/life-text-1.png') }}" alt="住民票・戸籍・印鑑登録">
             <h3 class="card__title" id="life-title-1"><a href="#">住民票・戸籍・印鑑登録</a></h3>
@@ -171,7 +170,6 @@
             <h3 class="card__title" id="life-title-4"><a href="#">子育て・福祉</a></h3>
             <p class="card__text" id="life-text-4">児童手当の支給申請、保育所入所案内、高齢者支援サービスの一覧。</p>
           </div>
-          </article>
         </div>
       </section>
 
@@ -179,29 +177,50 @@
       <section id="tab-edu" class="tab-content hidden">
         <h2>市立学校一覧</h2>
         <div class="guide-grid">
+          <!-- 小学校カード -->
           <div class="guide-card">
-            <h3>市立小中学校</h3>
-            <p id="edu-text-1">市内小学校の情報です。</p>
+            <h3 id="edu-title-1">小出市立小出小学校</h3>
+            <img class="card__image" id="edu-img-1" src="{{ url_for('static', filename='images/school1.jpg') }}" alt="小出市立小出小学校 外観">
+            <p class="card__text" id="edu-info-1">所在地：小出市柳川町4-1<br>電話番号：0123-60-1301</p>
           </div>
 
-        <h2>小出市立中央図書館</h2>
-        <div class="library-info">
-          <p id="lib-status">本日の開館状況：<strong>通常開館（9:00 - 19:00）</strong></p>
-          
-          <h3>新着図書のご案内</h3>
-          <ul class="book-list">
-            <li id="book-1">『小出市の地質と歴史』 - 小出市史編纂委員会</li>
-            <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
-            <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
-          </ul>
-          <p><a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">資料室はこちら</a></p>
+          <!-- 中学校カード -->
+          <div class="guide-card">
+            <h3 id="edu-title-2">小出市立小出中学校</h3>
+            <img class="card__image" id="edu-img-2" src="{{ url_for('static', filename='images/school2.jpg') }}" alt="小出市立小出中学校 外観">
+            <p class="card__text" id="edu-info-2">所在地：小出市南川町2-12<br>電話番号：0123-60-2026</p>
+          </div>
+        </div>
 
-          <div class="library-notice">
-            <h4>【ご注意】</h4>
-            <p id="lib-warning">館内での静寂保持にご協力ください。3階閲覧室は現在改修工事中のため立ち入り禁止です。</p>
+        <h2>小出市立中央図書館</h2>
+        <div class="library-card">
+          <img class="card__image" id="lib-img-1" src="{{ url_for('static', filename='images/lib.jpg') }}" alt="小出市立中央図書館 外観">
+          
+          <div class="library-content">
+            <p class="library-address" id="lib-address">所在地：小出市長井1-1 / 電話番号：0123-60-0065</p>
+            <p class="library-status" id="lib-status">本日の開館状況：<span class="badge bg-success">通常開館（9:00 - 19:00）</span></p>
+            
+            <div class="library-books">
+              <h3>新着図書のご案内</h3>
+              <ul class="book-list">
+                <li id="book-1">『小出市の地質と歴史』 - 小出市史編纂委員会</li>
+                <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
+                <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
+              </ul>
+              <p class="archive-link-wrap">
+                <a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">資料室はこちら</a>
+              </p>
+            </div>
+
+            <div class="library-notice">
+              <h4>【ご注意】</h4>
+              <p id="lib-warning">館内での静寂保持にご協力ください。3階閲覧室は現在改修工事中のため立ち入り禁止です。</p>
+            </div>
           </div>
         </div>
       </section>
+
+      
 
       <!-- 5. 観光 -->
       <section id="tab-shight" class="tab-content hidden">

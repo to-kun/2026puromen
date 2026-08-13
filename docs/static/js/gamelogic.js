@@ -7,7 +7,6 @@ class GameLogic {
     this.isReviewMode = false;
   }
 
-  // トランジション画面（画面A）を表示し、テキストやボタンを設定する
   showTransition(titleText, messageText, messageText2 = "", buttonText = "探索を開始する", showReviewButton = false) {
     const screenTransition = document.getElementById('screen-transition');
     const screenGame = document.getElementById('screen-game');
@@ -23,7 +22,6 @@ class GameLogic {
     if (messageEl2) messageEl2.textContent = messageText2;
     if (startBtn) startBtn.textContent = buttonText;
 
-    // 「振り返る」ボタンの表示/非表示切り替え
     if (reviewBtn) {
       if (showReviewButton) {
         reviewBtn.classList.remove('hidden');
@@ -32,20 +30,17 @@ class GameLogic {
       }
     }
 
-    // 画面Aを表示、画面Bを非表示
     if (screenTransition) screenTransition.classList.remove('hidden');
     if (screenGame) screenGame.classList.add('hidden');
   }
 
-  // 探索開始（画面Aを隠して画面Bを表示）
   startStage() {
-    this.isReviewMode = false; // 振り返りモード解除
+    this.isReviewMode = false;
     this.openGameScreen();
   }
 
-  // 振り返りモードで開始
   startReview() {
-    this.isReviewMode = true; // 振り返りモードON
+    this.isReviewMode = true;
     this.openGameScreen();
   }
 
@@ -57,45 +52,44 @@ class GameLogic {
     if (screenGame) screenGame.classList.remove('hidden');
 
     const stepEl = document.getElementById('current-step');
-    if (stepEl) stepEl.textContent = this.currentStep;
+    if (stepEl) stepEl.textContent = Number(this.currentStep);
   }
 
-  // ステージ初期化・更新
-  updateStage() {
-    // 初回プレイは必ず「異変なし」＆振り返りボタン非表示
+  updateStage(customTitle = null, customMsg = null, customMsg2 = null, showReview = null) {
     if (this.isFirstPlay) {
       this.hasAnomaly = false;
       this.showTransition(
-        `階層 ${this.currentStep}`,
+        `階層 ${Number(this.currentStep)}`,
         "異変がないか、ページ内を注意深く確認してください。",
         "各種リンクは押せないようになっています。また、「報告・お問い合わせ」から次へ進めます。",
         "探索を開始する",
-        false // 初回は非表示
+        false
       );
     } else {
-      // 2回目以降（正解して次の階層へ進む時も振り返りボタンを表示）
       this.hasAnomaly = Math.random() < 0.5;
-      this.showTransition(
-        `階層 ${this.currentStep}`,
-        "異変がないか、ページ内を注意深く確認してください。",
-        "",
-        "探索を開始する",
-        true // 初回以外は常に表示
-      );
+
+      const title = customTitle || `階層 ${Number(this.currentStep)}`;
+      const msg = customMsg || "異変がないか、ページ内を注意深く確認してください。";
+      const msg2 = customMsg2 || "";
+      const reviewFlag = (showReview !== null) ? showReview : true;
+
+      this.showTransition(title, msg, msg2, "探索を開始する", reviewFlag);
     }
 
-    // 異変の適用 / リセット
     if (window.AnomalyManager) {
       window.AnomalyManager.reset();
       if (this.hasAnomaly) {
-        window.AnomalyManager.applyRandom();
+        const appliedId = window.AnomalyManager.applyRandom();
+        if (appliedId && window.StorageManager) {
+          window.StorageManager.saveUnlockedAnomaly(appliedId);
+        }
       }
     }
   }
 
-  // プレイヤーの選択処理
+// プレイヤーの選択処理
   makeChoice(playerThinksAnomaly) {
-    // 振り返りモード中の場合は判定を行わず、そのまま画面A（案内画面）に戻る
+    // 振り返りモード中の場合：判定を行わず案内画面Aへ戻る
     if (this.isReviewMode) {
       this.isReviewMode = false;
       const screenTransition = document.getElementById('screen-transition');
@@ -106,41 +100,50 @@ class GameLogic {
     }
 
     // 初回フラグを解除（一度でも選択したら2回目以降扱い）
-    const wasFirstPlay = this.isFirstPlay;
     this.isFirstPlay = false;
 
-    // 通常の回答判定
+    // 前の階層数値を確実な数値型として保持
+    const prevStep = Number(this.currentStep);
+
+    // 回答判定
     if (playerThinksAnomaly === this.hasAnomaly) {
-      // 正解：進行度 +1
-      this.currentStep++;
+      // ---------------- 正解処理 ----------------
+      this.currentStep = Number(this.currentStep) + 1;
+
+      if (window.StorageManager) {
+        window.StorageManager.saveMaxStep(this.currentStep);
+      }
+
       if (this.currentStep >= this.maxStep) {
-        // クリア時
+        if (window.StorageManager) {
+          window.StorageManager.setHasCleared();
+        }
+
+        // 8階層クリア時（脱出成功）も振り返り可能にする
         this.showTransition(
           "脱出成功",
           "無事にすべての異変を回避し、市役所から退庁できました。",
           "おめでとうございます。",
           "最初から遊ぶ",
-          true // クリア後も直前のページを振り返れる
+          true // 振り返りボタン表示
         );
         this.currentStep = 0;
       } else {
-        // 次の階層へ
+        // 次の階層へ進む
         this.updateStage();
       }
     } else {
-      // 不正解：振り出しに戻る
-      const prevStep = this.currentStep;
+      // ---------------- 不正解処理 ----------------
+      // 0階層目へ戻す
       this.currentStep = 0;
 
-      // 初回プレイでのミスでなければ振り返りボタンを表示
-      const showReview = !wasFirstPlay;
-
-      this.showTransition(
-        `階層 ${this.currentStep}`,
+      // どのような誤判定（異変を見落とした / 正常なのに異変と勘違いした）であっても
+      // 直前のページを振り返れるように true をセット
+      this.updateStage(
+        `階層 ${Number(this.currentStep)}`,
         "異変がないか、ページ内を注意深く確認してください。",
         "",
-        "探索を開始する",
-        showReview // 初回ミス以外は表示
+        true 
       );
     }
   }
