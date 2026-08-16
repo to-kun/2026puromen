@@ -121,5 +121,81 @@ freeze.py を実行して build/ ディレクトリに静的HTML/CSS/JSを出力
   2. `gameLogic.js`
   3. `main.js`
 
+
 - **GitHub Pages対応**  
   静的ホスティング環境で動作させるため、異変データはAPI経由ではなく `anomalies.js` 内でJavaScriptオブジェクトとして直接管理されています。
+
+
+-**投稿者用コマンド**
+  Microsof EdgeやGoogle chrome等のブラウザから、開発者ツールを押す
+  そこで以下のコマンドが対応
+
+  -異変の強制発生・リセット
+    任意の異変を手動で発動させたり、正常状態に戻すコマンド。
+
+    -指定したIDの異変を強制発動
+      ```JavaScript
+      window.debugSetAnomaly("01"); // 01を任意の異変ID（文字列）に書き換えて実行
+      ```
+
+    -異変なし（正常状態）に強制リセット
+      ```JavaScript
+      window.debugSetAnomaly(0);
+      ```
+  
+  -セーブデータ・図鑑の操作（StorageManager）
+    localStorage に保存されているセーブデータの取得や直接書き換え。
+
+    -図鑑の解放状況（配列）を取得
+      ```JavaScript
+      window.StorageManager.getUnlockedAnomalies();
+      ```
+    
+    -特定の異変IDを図鑑に手動解放
+      ```JavaScript
+      window.StorageManager.saveUnlockedAnomaly("01"); // "01" 部分を解放したいIDに変更
+      ```
+    -現在の最高到達階層を取得
+      ```JavaScript
+      window.StorageManager.getMaxStep();
+      ```
+
+    -最高到達階層を書き換え
+      ```JavaScript
+      window.StorageManager.saveMaxStep(8); // 指定した階層数に変更
+      ```
+    -全セーブデータの一括消去（完全初期化）
+      ```JavaScript
+      localStorage.clear();
+      location.reload(); // 消去後に自動リロード
+
+  -ゲーム進行状態の直接書き換え（GameLogic）
+    進行中の内部フラグや階層を直接操作するコマンド。
+
+    -現在の階層を変更
+      ```JavaScript
+      window.game.currentStep = 5; // 任意の階層数
+      ```
+
+    -現在の階層判定（異変の有無）を直接変更
+      ```JavaScript
+      window.game.hasAnomaly = true; // true: 異変あり / false: 異変なし
+      ```
+
+    -強制的にクリア画面を表示
+      ```JavaScript
+      window.game.currentStep = 8;
+      window.game.makeChoice(true); // 直前の異変有無に合わせて実行
+
+  -データ確認コマンド（AnomalyManager）
+    CSVから読み込まれた異変データ一覧や、現在アクティブな異変データの確認。
+
+    -読み込まれている全異変データを出力
+      ```JavaScript
+      console.table(window.AnomalyManager.anomalies);
+      ```
+
+    -現在画面に適用されている異変のオブジェクトを取得
+      ```JavaScript
+      console.log(window.AnomalyManager.activeAnomaly);
+      ```
