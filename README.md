@@ -66,12 +66,6 @@
 
 - **発生確率の判定**
   - 各ステップ開始時、50%の固定確率で「異変あり」か「異変なし（通常）」かを決定する（※階層 0 は必ず「異変なし」）。
-- **重み（Weight）ベースの選出**
-  - 全異変には初期重み（例: `100`）が設定されている。
-  - 「異変あり」と判定された場合、各異変の現在の重み総和からランダム数値を算出し、比率に応じた確率で1つの異変を選出する。
-- **出現後の減衰処理**
-  - 一度選出されて発生した異変は、次回以降の出現率を下げるために重み値を減衰（例: 現在値の 20% へ減算）させる。
-  - 減衰された重みデータは即座に `localStorage` へ更新保存される。
 
 ---
 
@@ -126,76 +120,76 @@ freeze.py を実行して build/ ディレクトリに静的HTML/CSS/JSを出力
   静的ホスティング環境で動作させるため、異変データはAPI経由ではなく `anomalies.js` 内でJavaScriptオブジェクトとして直接管理されています。
 
 
--**投稿者用コマンド**
+-　**投稿者用コマンド**
   Microsof EdgeやGoogle chrome等のブラウザから、開発者ツールを押す
   そこで以下のコマンドが対応
 
-  -異変の強制発生・リセット
+  -　異変の強制発生・リセット
     任意の異変を手動で発動させたり、正常状態に戻すコマンド。
 
-    -指定したIDの異変を強制発動
+    -　指定したIDの異変を強制発動
       ```JavaScript
       window.debugSetAnomaly("01"); // 01を任意の異変ID（文字列）に書き換えて実行
       ```
 
-    -異変なし（正常状態）に強制リセット
+    -　異変なし（正常状態）に強制リセット
       ```JavaScript
       window.debugSetAnomaly(0);
       ```
   
-  -セーブデータ・図鑑の操作（StorageManager）
+  -　セーブデータ・図鑑の操作（StorageManager）
     localStorage に保存されているセーブデータの取得や直接書き換え。
 
-    -図鑑の解放状況（配列）を取得
+    -　図鑑の解放状況（配列）を取得
       ```JavaScript
       window.StorageManager.getUnlockedAnomalies();
       ```
     
-    -特定の異変IDを図鑑に手動解放
+    -　特定の異変IDを図鑑に手動解放
       ```JavaScript
       window.StorageManager.saveUnlockedAnomaly("01"); // "01" 部分を解放したいIDに変更
       ```
-    -現在の最高到達階層を取得
+    -　現在の最高到達階層を取得
       ```JavaScript
       window.StorageManager.getMaxStep();
       ```
 
-    -最高到達階層を書き換え
+    -　最高到達階層を書き換え
       ```JavaScript
       window.StorageManager.saveMaxStep(8); // 指定した階層数に変更
       ```
-    -全セーブデータの一括消去（完全初期化）
+    -　全セーブデータの一括消去（完全初期化）
       ```JavaScript
       localStorage.clear();
       location.reload(); // 消去後に自動リロード
 
-  -ゲーム進行状態の直接書き換え（GameLogic）
+  -　ゲーム進行状態の直接書き換え（GameLogic）
     進行中の内部フラグや階層を直接操作するコマンド。
 
-    -現在の階層を変更
+    -　現在の階層を変更
       ```JavaScript
       window.game.currentStep = 5; // 任意の階層数
       ```
 
-    -現在の階層判定（異変の有無）を直接変更
+    -　現在の階層判定（異変の有無）を直接変更
       ```JavaScript
       window.game.hasAnomaly = true; // true: 異変あり / false: 異変なし
       ```
 
-    -強制的にクリア画面を表示
+    -　強制的にクリア画面を表示
       ```JavaScript
       window.game.currentStep = 8;
       window.game.makeChoice(true); // 直前の異変有無に合わせて実行
 
-  -データ確認コマンド（AnomalyManager）
+  -　データ確認コマンド（AnomalyManager）
     CSVから読み込まれた異変データ一覧や、現在アクティブな異変データの確認。
 
-    -読み込まれている全異変データを出力
+    -　読み込まれている全異変データを出力
       ```JavaScript
       console.table(window.AnomalyManager.anomalies);
       ```
 
-    -現在画面に適用されている異変のオブジェクトを取得
+    -　現在画面に適用されている異変のオブジェクトを取得
       ```JavaScript
       console.log(window.AnomalyManager.activeAnomaly);
       ```

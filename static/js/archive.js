@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  // 1. StorageManager から解放済みIDを取得
   const unlockedIds = window.StorageManager ? window.StorageManager.getUnlockedAnomalies() : [];
 
-  // 2. CSVデータを読み込む関数
+  // CSVデータを読み込む関数
   async function fetchAnomalies() {
     try {
       const response = await fetch('./static/data/anomalies.csv');
@@ -24,7 +23,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         result.push(entry);
       }
-      return result;
+
+      // ★重要: 同じIDを持つ異変データを1つに集約（重複排除）
+      const uniqueAnomaliesMap = new Map();
+      result.forEach(item => {
+        const formattedId = String(item.id).padStart(2, '0');
+        if (!uniqueAnomaliesMap.has(formattedId)) {
+          uniqueAnomaliesMap.set(formattedId, {
+            ...item,
+            id: formattedId
+          });
+        }
+      });
+
+      return Array.from(uniqueAnomaliesMap.values());
     } catch (error) {
       console.error('[ERROR] アーカイブデータの取得に失敗しました:', error);
       return [];
@@ -39,29 +51,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   const progressBarEl = document.getElementById('progress-bar');
   const progressPercentEl = document.getElementById('progress-percent');
 
-  // 収集率の計算（IDの型補正）
   const formattedUnlockedIds = unlockedIds.map(id => String(id).padStart(2, '0'));
   
-  // 発見数のカウント（全データの中から解放済みIDに合致する数）
-  const unlockedCount = allAnomalies.filter(a => formattedUnlockedIds.includes(String(a.id).padStart(2, '0'))).length;
-  const totalCount = allAnomalies.length;
-  const percent = totalCount > 0 ? Math.round((unlockedCount / totalCount) * 100) : 0;
+  // カウント更新処理関数
+  function updateStats() {
+    const currentUnlockedIds = window.StorageManager ? window.StorageManager.getUnlockedAnomalies().map(id => String(id).padStart(2, '0')) : [];
+    const unlockedCount = allAnomalies.filter(a => currentUnlockedIds.includes(a.id)).length;
+    const totalCount = allAnomalies.length;
+    const percent = totalCount > 0 ? Math.round((unlockedCount / totalCount) * 100) : 0;
 
-  if (unlockedCountEl) unlockedCountEl.textContent = unlockedCount;
-  if (totalCountEl) totalCountEl.textContent = totalCount;
-  if (progressBarEl) progressBarEl.style.width = `${percent}%`;
-  if (progressPercentEl) progressPercentEl.textContent = `${percent}%`;
+    if (unlockedCountEl) unlockedCountEl.textContent = unlockedCount;
+    if (totalCountEl) totalCountEl.textContent = totalCount;
+    if (progressBarEl) progressBarEl.style.width = `${percent}%`;
+    if (progressPercentEl) progressPercentEl.textContent = `${percent}%`;
+  }
 
   // カード生成描画
   function renderCards(filter = 'all') {
     if (!gridEl) return;
     gridEl.innerHTML = '';
 
-    allAnomalies.forEach((anomaly) => {
-      const formattedId = String(anomaly.id).padStart(2, '0');
-      const isUnlocked = formattedUnlockedIds.includes(formattedId);
+    const currentUnlockedIds = window.StorageManager ? window.StorageManager.getUnlockedAnomalies().map(id => String(id).padStart(2, '0')) : [];
 
-      // フィルター条件
+    allAnomalies.forEach((anomaly) => {
+      const isUnlocked = currentUnlockedIds.includes(anomaly.id);
+
       if (filter === 'unlocked' && !isUnlocked) return;
       if (filter === 'locked' && isUnlocked) return;
 
@@ -70,13 +84,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (isUnlocked) {
         card.innerHTML = `
-          <div class="card-id">No.${formattedId} [発見済み]</div>
+          <div class="card-id">No.${anomaly.id} [発見済み]</div>
           <h3 class="card-title">${anomaly.description || '名称不明の異変'}</h3>
-          <p class="card-desc"></p>
+          <p class="card-desc">対象エリア: ${anomaly.tab || '不明'}タブ</p>
         `;
       } else {
         card.innerHTML = `
-          <div class="card-id">No.${formattedId} [未発見]</div>
+          <div class="card-id">No.${anomaly.id} [未発見]</div>
           <h3 class="card-title">？？？？？？</h3>
           <p class="card-desc">この異変はまだ発見されていません。</p>
         `;
@@ -96,6 +110,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // 初回描画
+  // リセットボタンのイベント追加
+  const resetBtn = document.getElementById('btn-reset-archive');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (confirm('これまで発見した異変の記録をすべてリセットしますか？')) {
+        localStorage.removeItem('koide_game_unlocked_anomalies');
+        updateStats();
+        const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+        renderCards(activeFilter);
+        alert('図鑑の収集記録を初期化しました。');
+      }
+    });
+  }
+
+  // 初回表示
+  updateStats();
   renderCards();
 });
