@@ -246,14 +246,21 @@ body {
    メインコンテンツエリア
    ========================================== */
 
+#hero-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
 .main-content {
   max-width: 1000px;
-  margin: 0 auto 40px auto; /* 下側に少し余白を作る */
+  margin: 0 auto 40px auto;
   padding: 30px 20px;
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  
   /* コンテンツが少ない時でもフッターを下に移動させる */
   flex: 1;
 }
@@ -536,6 +543,289 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影を薄く・小さくする */
 }
 
+
+.banner-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* バナー共通スタイル（ボタン風） */
+.banner-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #ffffff !important;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  position: relative;
+  overflow:hidden
+}
+
+/* ホバー・アクティブ（押した時）のアニメーション */
+.banner-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
+}
+
+.banner-item:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* テキスト表現 */
+.banner-sub {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  font-weight: normal;
+  margin-bottom: 2px;
+}
+
+.banner-title {
+  font-size: 0.95rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* 1. 防災アプリ（赤〜オレンジグラデーション） */
+.banner-app {
+  background: linear-gradient(135deg, #e53e3e, #dd6b20);
+}
+
+/* 2. ふるさと納税（ゴールド〜オレンジグラデーション） */
+.banner-furusato {
+  background: linear-gradient(135deg, #d69e2e, #b7791f);
+}
+
+/* 3. 公式LINE（LINEグリーン） */
+.banner-line {
+  background: linear-gradient(135deg, #06c755, #00b341);
+}
+
+/* 4. 広報Instagram（インスタ風グラデーション） */
+.banner-insta {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* 5. 電子申請（知的なブルー〜ネイビー） */
+.banner-shinsei {
+  background: linear-gradient(135deg, #3182ce, #2b6cb0);
+}
+
+/* 6. ハザードマップ（警告・安全感のあるイエロー〜ダークオレンジ） */
+.banner-hazard {
+  background: linear-gradient(135deg, #d69e2e, #c05621);
+}
+
+/* 7. ごみ分別（環境・クリーンなエメラルドグリーン） */
+.banner-gomi {
+  background: linear-gradient(135deg, #38a169, #234e52);
+}
+
+/* 8. イベント・施設予約（華やかなパープル〜パープルピンク） */
+.banner-event {
+  background: linear-gradient(135deg, #805ad5, #6b46c1);
+}
+
+
+/* ==========================================
+   「市長の部屋」専用スタイル
+   ========================================== */
+
+/* 1. 市長メッセージ（サブタイトル） */
+#shicho-msg {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 20px;
+}
+
+/* 2. プロフィールエリア（写真＋テーブル） */
+.officer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+/* 市長写真 */
+#officer-img {
+  width: 180px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+}
+
+/* プロフィールテーブル */
+#officer-table {
+  flex: 1;
+  min-width: 280px;
+  border-collapse: collapse;
+}
+
+#officer-table th,
+#officer-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+#officer-table th {
+  background-color: #f7fafc;
+  color: #2d3748;
+  width: 25%;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+#officer-table td {
+  color: #4a5568;
+}
+
+/* 3. あいさつエリア */
+.city-introduce {
+  background-color: #f8fafc;
+  border-left: 5px solid #2b6cb0; /* 行政らしい上品なブルー */
+  border-radius: 0 8px 8px 0;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.city-introduce h2 {
+  font-size: 1.25rem;
+  color: #2b6cb0;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.city-introduce p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #2d3748;
+  margin-bottom: 12px;
+}
+
+.city-introduce p:last-child {
+  margin-bottom: 0;
+}
+
+/* 4. 私の目指す小出市（2列カードレイアウト） */
+#city-symbol {
+  margin-top: 24px;
+}
+
+#city-symbol-info {
+  font-size: 1.3rem;
+  color: #2d3748;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+/* カードを包むリスト構造（2列横並び） */
+#city-symbol.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* 個々のマニフェストカード */
+#city-symbol .card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* カードのホバーアニメーション */
+#city-symbol .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+#city-symbol .card__image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+#city-symbol .card__title {
+  font-size: 1.1rem;
+  color: #2b6cb0;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+#city-symbol .card__text {
+  font-size: 0.88rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================
+   観光タブ用スタイル
+   ========================================== */
+
+/* 観光カード内の画像サイズとホバー効果 */
+#tab-shight .card__image {
+  width: 100%;
+  height: 180px;            /* 画像の高さを統一 */
+  object-fit: cover;         /* 縦横比を崩さずトリミング */
+  border-radius: 6px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* 画像に触れたとき：少し拡大して浮き上がる */
+#tab-shight .card__image:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* 画像を押したとき：少し沈む */
+#tab-shight .card__image:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 観光タイトルのリンクデザイン */
+#tab-shight .card__title a {
+  color: #2b6cb0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#tab-shight .card__title a:hover {
+  text-decoration: underline;
+  color: #2c5282;
+}
+
+
+
 /* 学校カード内のタイトル */
 .guide-card h3 {
   font-size: 1.05rem;
@@ -724,97 +1014,144 @@ body {
   display: none !important;
 }
 
+.disclaimer-text {
+  font-size: 0.75rem;     /* 文字を小さめに */
+  color: #a0aec0;         /* 目立ちすぎない薄いグレー */
+  margin-top: 15px;
+  text-align: center;
+  line-height: 1.4;
+}
+
 
 
 
 /* ==========================================
    アーカイブページ用
    ========================================== */
-
-
-/* アーカイブページ全体のスタイリング */
-.archive-header {
-  background-color: #1a365d;
-  color: #ffffff;
-  padding: 20px 0;
-  border-bottom: 4px solid #3182ce;
+/* アーカイブ画面専用のリセット・ヘッダー位置調整 */
+body.archive-page {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f8;
+  color: #333;
+  line-height: 1.6;
+  padding-bottom: 40px;
 }
 
-.archive-header .header-inner {
+body.archive-page .archive-header {
+  margin-top: 0;
+  background-color: #1a365d;
+  color: #fff;
+  padding: 24px 20px;
+  border-bottom: 4px solid #2b6cb0;
+}
+
+body.archive-page .archive-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+   /* ヘッダー */
+.archive-header {
+  background-color: #1a365d;
+  color: #fff;
+  padding: 24px 20px;
+  border-bottom: 4px solid #2b6cb0;
+}
+
+.header-inner {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  position: relative;
 }
 
 .archive-header h1 {
-  font-size: 1.5rem;
-  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .archive-header .sub-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: normal;
-  color: #cbd5e0;
+  margin-left: 10px;
+  opacity: 0.9;
 }
 
 .notice-text {
   font-size: 0.85rem;
-  color: #a0aec0;
-  margin: 0;
+  color: #cbd5e0;
+  margin-top: 4px;
 }
 
+/* ボタン（全般） */
 .btn-back {
-  color: #ffffff;
-  background-color: #2b6cb0;
+  background-color: #edf2f7;
+  border: 1px solid #cbd5e0;
+  color: #2d3748;
   padding: 8px 16px;
   border-radius: 4px;
-  text-decoration: none;
+  cursor: pointer;
   font-size: 0.9rem;
-  border: none;        /* buttonタグ用に追加 */
-  cursor: pointer;     /* buttonタグ用に追加 */
-  font-family: inherit;/* buttonタグ用に追加 */
+  font-weight: bold;
+  transition: all 0.2s ease;
 }
 
 .btn-back:hover {
-  background-color: #2c5282;
+  background-color: #e2e8f0;
+  border-color: #a0aec0;
 }
 
+.header-inner .btn-back {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* メインコンテンツ枠 */
 .archive-main {
   max-width: 1000px;
   margin: 30px auto;
   padding: 0 20px;
 }
 
-/* 統計セクション */
+/* 統計・収集率エリア */
 .stats-section {
-  background-color: #f7fafc;
+  background-color: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
+}
+
+.stats-section h2 {
+  font-size: 1.25rem;
+  color: #1a202c;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
 }
 
 .stats-box {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-top: 10px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .stats-count {
-  font-size: 1.2rem;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .progress-bar-container {
   flex: 1;
-  height: 20px;
+  min-width: 200px;
+  height: 16px;
   background-color: #edf2f7;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   border: 1px solid #cbd5e0;
 }
@@ -826,30 +1163,38 @@ body {
 }
 
 .stats-percent {
-  font-size: 1.1rem;
   font-weight: bold;
   color: #2b6cb0;
+  font-size: 1.1rem;
 }
 
-/* フィルターボタン */
+/* フィルターボタン群 */
 .filter-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
 .filter-btn {
-  padding: 8px 18px;
+  background-color: #fff;
   border: 1px solid #cbd5e0;
-  background-color: #ffffff;
+  padding: 8px 18px;
   border-radius: 20px;
   cursor: pointer;
+  font-size: 0.9rem;
+  color: #4a5568;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: #f7fafc;
 }
 
 .filter-btn.active {
-  background-color: #3182ce;
-  color: #ffffff;
-  border-color: #3182ce;
+  background-color: #2b6cb0;
+  color: #fff;
+  border-color: #2b6cb0;
+  font-weight: bold;
 }
 
 /* 異変カードグリッド */
@@ -857,54 +1202,78 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
+  margin-bottom: 30px;
 }
 
+/* 異変カード本体 */
 .anomaly-card {
-  border: 1px solid #e2e8f0;
+  background-color: #fff;
   border-radius: 8px;
-  padding: 16px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.anomaly-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card-id {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 /* 発見済みカード */
 .anomaly-card.unlocked {
-  border-top: 4px solid #3182ce;
+  border-top: 4px solid #38a169;
 }
 
-.anomaly-card .card-id {
-  font-size: 0.8rem;
-  color: #718096;
-  margin-bottom: 4px;
+.anomaly-card.unlocked .card-id {
+  color: #276749;
 }
 
-.anomaly-card .card-title {
+.anomaly-card.unlocked .card-title {
   font-size: 1.1rem;
-  margin: 0 0 8px 0;
-  color: #2d3748;
+  color: #1a202c;
+  margin-bottom: 8px;
 }
 
-.anomaly-card .card-desc {
+.anomaly-card.unlocked .card-desc {
   font-size: 0.9rem;
   color: #4a5568;
 }
 
-/* 未発見カード（グレーアウト） */
+/* 未発見カード */
 .anomaly-card.locked {
-  background-color: #edf2f7;
-  border: 1px dashed #cbd5e0;
-  opacity: 0.7;
+  border-top: 4px solid #a0aec0;
+  background-color: #f8fafc;
+}
+
+.anomaly-card.locked .card-id {
+  color: #718096;
 }
 
 .anomaly-card.locked .card-title {
+  font-size: 1.1rem;
+  color: #a0aec0;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.anomaly-card.locked .card-desc {
+  font-size: 0.85rem;
   color: #a0aec0;
 }
 
+/* フッター */
 .archive-footer {
   text-align: center;
   padding: 20px;
-  background-color: #edf2f7;
   color: #718096;
-  margin-top: 40px;
   font-size: 0.85rem;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 40px;
 }

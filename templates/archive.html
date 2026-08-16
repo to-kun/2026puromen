@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="小出市役所ウェブサイトで発見された異変の記録一覧ページです。">
     <title>小出市役所 発見した異変アーカイブ</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- CSSのパスを static/css/style.css に変更（配置場所に合わせて調整） -->
+    <link rel="stylesheet" href="./static/css/style.css">
   </head>
-  <body>
+  <body class="archive-page">
     <!-- 官公庁風ヘッダー -->
     <header class="archive-header">
       <div class="header-inner">
@@ -40,9 +41,7 @@
       </div>
 
       <section class="gallery-section">
-        <div id="anomaly-grid" class="anomaly-grid">
-
-        </div>
+        <div id="anomaly-grid" class="anomaly-grid"></div>
       </section>
       <button type="button" class="btn-back" onclick="window.close();">✕ タブを閉じる</button>
     </main>
@@ -51,8 +50,8 @@
       <p>小出市役所 異変調査課 （※このページ内に異変はありません）</p>
     </footer>
 
+    <!-- JSファイルの読み込み -->
     <script src="./static/js/storage.js"></script>
-    <script src="./static/js/minorAnomalies.js"></script>
     <script src="./static/js/archive.js" defer></script>
   </body>
 </html>

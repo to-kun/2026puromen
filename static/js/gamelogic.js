@@ -7,10 +7,22 @@ class GameLogic {
     this.isReviewMode = false;
   }
 
-  showTransition(titleText, messageText, messageText2 = "", buttonText = "探索を開始する", showReviewButton = false) {
-    const screenTransition = document.getElementById('screen-transition');
-    const screenGame = document.getElementById('screen-game');
+  // 画面表示切り替え用共通メソッド
+  showScreen(screenId) {
+    const screens = ['screen-transition', 'screen-game', 'screen-review'];
+    screens.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        if (id === screenId) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      }
+    });
+  }
 
+  showTransition(titleText, messageText, messageText2 = "", buttonText = "探索を開始する", showReviewButton = false) {
     const titleEl = document.getElementById('transition-title');
     const messageEl = document.getElementById('transition-message');
     const messageEl2 = document.getElementById('transition-first');
@@ -30,8 +42,7 @@ class GameLogic {
       }
     }
 
-    if (screenTransition) screenTransition.classList.remove('hidden');
-    if (screenGame) screenGame.classList.add('hidden');
+    this.showScreen('screen-transition');
   }
 
   startStage() {
@@ -41,15 +52,58 @@ class GameLogic {
 
   startReview() {
     this.isReviewMode = true;
-    this.openGameScreen();
+    this.showScreen('screen-review');
+    this.renderReviewList();
+  }
+
+  renderReviewList() {
+    const listContainer = document.getElementById('review-list'); // 異変リスト描画先
+    if (!window.AnomalyManager) return;
+
+    const reviewData = window.AnomalyManager.getReviewData();
+    const totalCount = reviewData.length;
+    const unlockedCount = reviewData.filter(item => item.isUnlocked).length;
+    const progressPercent = totalCount > 0 ? Math.round((unlockedCount / totalCount) * 100) : 0;
+
+    // 1. カウンター・進捗率の更新（画面上に要素が存在すれば反映）
+    const countEl = document.getElementById('review-count');
+    if (countEl) {
+      countEl.textContent = `${unlockedCount} / ${totalCount}`;
+    }
+
+    const percentEl = document.getElementById('review-percent');
+    if (percentEl) {
+      percentEl.textContent = `${progressPercent}%`;
+    }
+
+    // 2. リスト部分のHTML生成
+    if (!listContainer) return;
+
+    let html = '';
+    reviewData.forEach(item => {
+      if (item.isUnlocked) {
+        html += `
+          <div class="review-item unlocked">
+            <span class="anomaly-id">No.${item.id}</span>
+            <span class="anomaly-desc">${item.description}</span>
+            <span class="anomaly-tab">（${item.tab}タブ）</span>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="review-item locked">
+            <span class="anomaly-id">No.${item.id}</span>
+            <span class="anomaly-desc">？？？？？？？？？？</span>
+          </div>
+        `;
+      }
+    });
+
+    listContainer.innerHTML = html;
   }
 
   openGameScreen() {
-    const screenTransition = document.getElementById('screen-transition');
-    const screenGame = document.getElementById('screen-game');
-
-    if (screenTransition) screenTransition.classList.add('hidden');
-    if (screenGame) screenGame.classList.remove('hidden');
+    this.showScreen('screen-game');
 
     const stepEl = document.getElementById('current-step');
     if (stepEl) stepEl.textContent = Number(this.currentStep);
@@ -82,17 +136,11 @@ class GameLogic {
       if (this.hasAnomaly) {
         const appliedId = window.AnomalyManager.applyRandom();
         if (appliedId) {
-          // 異変ありログ
           console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり (No.${appliedId})`);
-          if (window.StorageManager) {
-            window.StorageManager.saveUnlockedAnomaly(appliedId);
-          }
         } else {
-          // 異変あり判定だがID取得失敗時
           console.warn(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり判定ですが、対象の異変が取得できませんでした`);
         }
       } else {
-        // 異変なしログ
         console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変なし`);
       }
     }
@@ -103,22 +151,27 @@ class GameLogic {
     // 振り返りモード中の場合：判定を行わず案内画面Aへ戻る
     if (this.isReviewMode) {
       this.isReviewMode = false;
-      const screenTransition = document.getElementById('screen-transition');
-      const screenGame = document.getElementById('screen-game');
-      if (screenTransition) screenTransition.classList.remove('hidden');
-      if (screenGame) screenGame.classList.add('hidden');
+      this.showScreen('screen-transition');
       return;
     }
 
     // 初回フラグを解除（一度でも選択したら2回目以降扱い）
     this.isFirstPlay = false;
 
-    // 前の階層数値を確実な数値型として保持
-    const prevStep = Number(this.currentStep);
-
     // 回答判定
     if (playerThinksAnomaly === this.hasAnomaly) {
       // ---------------- 正解処理 ----------------
+
+      // 異変ありを正しく報告できた場合、図鑑を解放
+      if (playerThinksAnomaly === true && window.AnomalyManager && window.AnomalyManager.activeAnomaly) {
+        const currentAnomalyId = window.AnomalyManager.activeAnomaly.id;
+        if (window.StorageManager) {
+          const formattedId = String(currentAnomalyId).padStart(2, '0');
+          window.StorageManager.saveUnlockedAnomaly(formattedId);
+          console.log(`[DEBUG] 異変報告成功！ 図鑑解放: No.${formattedId}`);
+        }
+      }
+
       this.currentStep = Number(this.currentStep) + 1;
 
       if (window.StorageManager) {
@@ -130,26 +183,21 @@ class GameLogic {
           window.StorageManager.setHasCleared();
         }
 
-        // 8階層クリア時（脱出成功）も振り返り可能にする
         this.showTransition(
           "脱出成功",
           "無事にすべての異変を回避し、市役所から退庁できました。",
           "おめでとうございます。",
           "最初から遊ぶ",
-          true // 振り返りボタン表示
+          true
         );
         this.currentStep = 0;
       } else {
-        // 次の階層へ進む
         this.updateStage();
       }
     } else {
       // ---------------- 不正解処理 ----------------
-      // 0階層目へ戻す
       this.currentStep = 0;
 
-      // どのような誤判定（異変を見落とした / 正常なのに異変と勘違いした）であっても
-      // 直前のページを振り返れるように true をセット
       this.updateStage(
         `階層 ${Number(this.currentStep)}`,
         "異変がないか、ページ内を注意深く確認してください。",

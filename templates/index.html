@@ -81,14 +81,66 @@
               <li>
                 <span class="news-date">2026.07.01</span>
                 <a href="#" id="news-item-5">市役所本庁舎の夜間停電点検の実施について</a>
+              </li><li>
+                <span class="news-date">2026.06.20</span>
+                <a href="#" id="news-item-6">【健康】集団基本集団健診（特定健診）のお申し込み開始について</a>
+              </li>
+              <li>
+                <span class="news-date">2026.06.10</span>
+                <a href="#" id="news-item-7">市道民税の納付書送付および各種減免制度のご案内</a>
+              </li>
+              <li>
+                <span class="news-date">2026.06.01</span>
+                <a href="#" id="news-item-8">広報こいで 来月は特別増刊号！市長のギター演奏CDがついてくる！</a>
+              </li>
+              <li>
+                <span class="news-date">2026.05.20</span>
+                <a href="#" id="news-item-9">空き家等対策に関する無料相談会の開催について</a>
               </li>
             </ul>
           </div>
         </div>
         <br>
         <div class="banner-group">
-          <div class="banner-item" id="banner-1">小出市公式防災アプリ配信中</div>
-          <div class="banner-item" id="banner-2">ふるさと納税で小出市を応援しよう</div>
+          <a href="#" class="banner-item banner-app" id="banner-1">
+            <span class="banner-sub">スマホで簡単・安心</span>
+            <span class="banner-title">小出市公式防災アプリ</span>
+          </a>
+
+          <a href="#" class="banner-item banner-furusato" id="banner-2">
+            <span class="banner-sub">小出市の魅力を全国へ</span>
+            <span class="banner-title">ふるさと納税で小出を応援</span>
+          </a>
+
+          <a href="#" class="banner-item banner-line" id="banner-3">
+            <span class="banner-sub">友だち募集中！</span>
+            <span class="banner-title">小出市 公式LIME</span>
+          </a>
+
+          <a href="#" class="banner-item banner-insta" id="banner-4">
+            <span class="banner-sub">まちの魅力を写真でお届け</span>
+            <span class="banner-title">小出市 広報Instagrum</span>
+          </a>
+
+          <a href="#" class="banner-item banner-shinsei" id="banner-5">
+            <span class="banner-sub">24時間いつでも可能</span>
+            <span class="banner-title">小出市 電子申請サービス</span>
+          </a>
+          
+          <a href="#" class="banner-item banner-hazard" id="banner-6">
+            <span class="banner-sub">土砂災害・洪水に備える</span>
+            <span class="banner-title">小出市 ハザードマップ</span>
+          </a>
+
+          <a href="#" class="banner-item banner-gomi" id="banner-7">
+            <span class="banner-sub">今日は何のゴミの日？</span>
+            <span class="banner-title">ごみカレンダー・分別手引</span>
+          </a>
+
+          <a href="#" class="banner-item banner-event" id="banner-8">
+            <span class="banner-sub">まちの行事・施設予約</span>
+            <span class="banner-title">小出 イベント・施設予約</span>
+          </a>
         </div>
       </section>
 
@@ -96,7 +148,6 @@
       <section id="tab-shicho" class="tab-content hidden">
         <h2>市長の部屋</h2>
         <p id="shicho-msg">小出ともや市長によるページです。</p>
-
         <div class="officer">
           <img id="officer-img" src="{{ url_for('static', filename='images/officer.png') }}" alt="市長・小出ともや">
           <table id="officer-table">
@@ -110,7 +161,7 @@
             </tr>
             <tr>
               <th class="tableheader">特技</th>
-              <td class="cell">変顔</td>
+              <td class="cell">変顔して自撮り</td>
             </tr>
             <tr>
               <th class="tableheader">趣味</th>
@@ -118,29 +169,27 @@
             </tr>
           </table>
         </div><br>
-
         <div class="city-introduce">
           <h2 id="city-introduce-title">あいさつ</h2>
           <p id="city-introduce-text1">市長のページにお越しいただきありがとうございます。</p>
-          <p id="city-introduce-text2">小出市は、東に太平洋、西に羊蹄山という、自然あふれる豊かな住環境を備えた<b>「世界に誇れる」まち</b>です。</p>
+          <p id="city-introduce-text2">小出市は、自然あふれる豊かな環境をもつ、<b>「世界に誇れる」まち</b>です。</p>
           <p id="city-introduce-text3">この環境を維持していらっしゃる小出市民の皆さまも、小出市の大きな魅力であると考えています。</p>
-          <p id="city-introduce-text4">小出の皆さまと、住み続けたい「国際都市・小出」をめざし、市民と行政の間に立ち、魅力を発信するリーダーとして、先進的なまちづくりを進めます。</p>
+          <p id="city-introduce-text4">小出の皆さまと、住み続けたい<b>「国際都市・小出」</b>をめざし、市民と行政の間に立ち、魅力を発信するリーダーとして、先進的なまちづくりを進めます。</p>
           <p id="city-introduce-text5">ご理解とご協力を賜りますよう、よろしくお願い申し上げます。</p>
         </div><br>
-
         <div class="card-list" id="city-symbol">
           <h2 id="city-symbol-info">私の目指す小出市</h2>
           <article class="card">
             <img class="card__image" id="card-symbol-img1" src="{{ url_for('static', filename='images/symbol1.png') }}" alt="住みやすい">
             <h3 class="card__title" id="card-symbol-title1">住みやすいまち</h3>
-            <p class="card__text" id="card-symbol-text1">ddddddd</p>
+            <p class="card__text" id="card-symbol-text1">子育て世代から高齢者まで、誰もが安全・安心に暮らせる街づくりを進めます。インフラの整備や防災体制の強化に取り組みます。</p>
           </article>
           <article class="card">
             <img class="card__image" id="card-symbol-img2" src="{{ url_for('static', filename='images/symbol2.png') }}" alt="みんなに優しい">
             <h3 class="card__title" id="card-symbol-title2">みんなに優しいまち</h3>
-            <p class="card__text" id="card-symbol-text2">dddddddd</p>
+            <p class="card__text" id="card-symbol-text2">医療・福祉の充実を図り、支援を必要とする方々に寄り添う行政を目指します。地域全体で支え合える温かいコミュニティを育みます。</p>
           </article>
-        </div>
+        </div> 
       </section>
 
 <!-- 3. くらし・手続き -->
@@ -203,9 +252,9 @@
             <div class="library-books">
               <h3>新着図書のご案内</h3>
               <ul class="book-list">
-                <li id="book-1">『小出市の地質と歴史』 - 小出市史編纂委員会</li>
-                <li id="book-2">『初心者から始める家庭菜園』 - 園芸太郎</li>
-                <li id="book-3">『現代行政と市民生活』 - 地方自治研究会</li>
+                <li id="book-1">『にんなめ』- バッキー</li>
+                <li id="book-2">『今日から始める途中入室』 - ともくん</li>
+                <li id="book-3">『その情報技術、可か不可か』 - Hoshi.K</li>
               </ul>
               <p class="archive-link-wrap">
                 <a href="./archive.html" target="_blank" class="btn btn-sm btn-outline-primary">資料室はこちら</a>
@@ -225,7 +274,42 @@
       <!-- 5. 観光 -->
       <section id="tab-shight" class="tab-content hidden">
         <h2>観光情報</h2>
-        <p>小出市の名所やイベント情報をお届けします。</p>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <img class="card__image" id="shight-img-1" src="{{ url_for('static', filename='images/kanko (1).jpg') }}" alt="六正山ハイキングコース">
+            <h3 class="card__title" id="shight-title-1"><a href="#">六正山ハイキングコース</a></h3>
+            <p class="card__text" id="shight-text-1">四季折々の高山植物と絶景を楽しめる小出市のシンボル山です。登山道も整備されています。初心者は5合目山小屋までがおすすめ。</p>
+            <p class="card__text" id="shight-text-1-">中心部から車で25分/P100台/入山無料</p>
+          </div>
+
+          <div class="guide-card">
+            <img class="card__image" id="shight-img-2" src="{{ url_for('static', filename='images/kanko (2).jpg') }}" alt="小出市田所地区·ヒロト丘">
+            <h3 class="card__title" id="shight-title-2"><a href="#">小出市田所地区·ヒロト丘</a></h3>
+            <p class="card__text" id="shight-text-2">パッチワークのような田所地区の田園風景と山々を一望できる展望スポットです。直売所では新鮮な農作物が購入できます。</p>
+            <p class="card__text" id="shight-text-2-">中心部から車で12分/P15台</p>
+          </div>
+
+          <div class="guide-card">
+            <img class="card__image" id="shight-img-3" src="{{ url_for('static', filename='images/kanko (3).jpg') }}" alt="ムセーヌ川リバーサイド">
+            <h3 class="card__title" id="shight-title-3"><a href="#">ムセーヌ川リバーサイド</a></h3>
+            <p class="card__text" id="shight-text-3">小松川分流であるムセーヌ川が市内を南北に流れていて、河畔はサイクリングや散策、川下りが楽しめる市民憩いのスポットです。</p>
+            <p class="card__text" id="shight-text-3">中心部から徒歩5分</p>
+          </div>
+
+          <div class="guide-card">
+            <img class="card__image" id="shight-img-4" src="{{ url_for('static', filename='images/kanko (4).jpg') }}" alt="ぬこ鶴温泉郷">
+            <h3 class="card__title" id="shight-title-4"><a href="#">ぬこ鶴温泉郷</a></h3>
+            <p class="card__text" id="shight-text-4">湯けむり立ち込める歴史ある温泉街。日帰り入浴や名物の湯めぐりが人気です。市内中心部からの路線バスが多数運航しています。</p>
+            <p class="card__text" id="shight-text-4">中心部から車で18分/中心部からバス1日20～30本/詳しくは各施設へ</p>
+          </div>
+
+          <div class="guide-card">
+            <img class="card__image" id="shight-img-5" src="{{ url_for('static', filename='images/kanko (5).jpg') }}" alt="小出海岸・二股岩">
+            <h3 class="card__title" id="shight-title-5"><a href="#">小出海岸・二股岩</a></h3>
+            <p class="card__text" id="shight-text-5">荒波が造り出した迫力満点の断崖と奇岩が広がる、小出市屈指の景勝地です。干潮時には岩の根本まで歩いて行くことができます。</p>
+            <p class="card__text" id="shight-text-5">中心部から車で20分/P10台</p>
+          </div>
+        </div>
       </section>
 
       <!-- 6. 職員紹介 -->
@@ -301,6 +385,7 @@
         <p id="footer-open">開庁時間：平日8:30〜17:15 土曜日9:00～12:00(市民課のみ)</p>
       </div>
       <p class="copyright">&copy; Koide City. All Rights Reserved.</p>
+      <p class="disclaimer-text">  ※この作品はフィクションです。登場する人物・団体・名称・地名等は架空のものであり、実在の人物・団体・Webサイトとは一切関係ありません。</p>
     </footer>
 
   </div>
