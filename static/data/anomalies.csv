@@ -1,0 +1,5 @@
+id,type,target_id,anomaly_value,description
+01,text,staff-name-1,広報課長：異変 異変,広報課長の名前が変わっている
+02,html,lib-status,本日の開館状況：<strong>24時間営業（0:00 - 24:00）</strong>,図書館の開館時間が24時間になっている
+03,text,officer-hobby,世界征服,市長の趣味が世界征服になっている
+04,style,hero-img,filter: hue-rotate(90deg);,ヒーロー画像の色味が変わっている

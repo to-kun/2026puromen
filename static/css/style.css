@@ -246,14 +246,21 @@ body {
    メインコンテンツエリア
    ========================================== */
 
+#hero-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
 .main-content {
   max-width: 1000px;
-  margin: 0 auto 40px auto; /* 下側に少し余白を作る */
+  margin: 0 auto 40px auto;
   padding: 30px 20px;
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  
   /* コンテンツが少ない時でもフッターを下に移動させる */
   flex: 1;
 }

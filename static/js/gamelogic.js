@@ -10,7 +10,7 @@ class GameLogic {
   showTransition(titleText, messageText, messageText2 = "", buttonText = "探索を開始する", showReviewButton = false) {
     const screenTransition = document.getElementById('screen-transition');
     const screenGame = document.getElementById('screen-game');
-    
+
     const titleEl = document.getElementById('transition-title');
     const messageEl = document.getElementById('transition-message');
     const messageEl2 = document.getElementById('transition-first');
@@ -78,16 +78,27 @@ class GameLogic {
 
     if (window.AnomalyManager) {
       window.AnomalyManager.reset();
+
       if (this.hasAnomaly) {
         const appliedId = window.AnomalyManager.applyRandom();
-        if (appliedId && window.StorageManager) {
-          window.StorageManager.saveUnlockedAnomaly(appliedId);
+        if (appliedId) {
+          // 異変ありログ
+          console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり (No.${appliedId})`);
+          if (window.StorageManager) {
+            window.StorageManager.saveUnlockedAnomaly(appliedId);
+          }
+        } else {
+          // 異変あり判定だがID取得失敗時
+          console.warn(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり判定ですが、対象の異変が取得できませんでした`);
         }
+      } else {
+        // 異変なしログ
+        console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変なし`);
       }
     }
   }
 
-// プレイヤーの選択処理
+  // プレイヤーの選択処理
   makeChoice(playerThinksAnomaly) {
     // 振り返りモード中の場合：判定を行わず案内画面Aへ戻る
     if (this.isReviewMode) {
@@ -114,7 +125,7 @@ class GameLogic {
         window.StorageManager.saveMaxStep(this.currentStep);
       }
 
-      if (this.currentStep >= this.maxStep) {
+      if (this.currentStep > this.maxStep) {
         if (window.StorageManager) {
           window.StorageManager.setHasCleared();
         }
@@ -143,7 +154,7 @@ class GameLogic {
         `階層 ${Number(this.currentStep)}`,
         "異変がないか、ページ内を注意深く確認してください。",
         "",
-        true 
+        true
       );
     }
   }
