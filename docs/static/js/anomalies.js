@@ -13,7 +13,7 @@ class AnomalyManager {
     }
 
     try {
-      const response = await fetch('/static/data/anomalies.csv');
+      const response = await fetch('./static/data/anomalies.csv');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 2. CSVデータを読み込む関数
   async function fetchAnomalies() {
     try {
-      const response = await fetch('/static/data/anomalies.csv');
+      const response = await fetch('./static/data/anomalies.csv');
       if (!response.ok) throw new Error('CSV読み込み失敗');
       const text = await response.text();
       
