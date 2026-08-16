@@ -1,7 +1,7 @@
 id,type,target_id,anomaly_value,description,tab
-01,text,staff-name-1,広報課長：異変 異変,広報課長の名前,staff
-02,html,lib-status,本日の開館状況：<span class="badge bg-success">通常開館（0:00 - 1:00）</span>,図書館の開館時間,edu
-03,style,hero-img,filter: hue-rotate(90deg);,トップ画面の画像の色味,top
-04,text,hero-catch,市役所は閉鎖されました,市役所閉鎖というお知らせ,top
-04,style,tab-top,filter: grayscale(100%);,市役所閉鎖というお知らせ,top
-04,html,header-date,<s>令和8年8月12日</s> <b>消滅</b>,市役所閉鎖というお知らせ,top
+01,text,staff-name-1,広報課長：異変 異変,広報課長の名前,職員紹介
+02,html,lib-status,本日の開館状況：<span class="badge bg-success">通常開館（0:00 - 1:00）</span>,図書館の開館時間,教育・図書館
+03,style,hero-img,filter: hue-rotate(90deg);,トップ画面の画像の色味,トップページ
+04,text,hero-catch,市役所は閉鎖されました,市役所閉鎖のお知らせ,トップページ
+04,style,tab-top,filter: grayscale(100%);,市役所閉鎖のお知らせ,トップページ
+04,html,header-date,<s>令和8年8月12日</s> <b>消滅</b>,市役所閉鎖のお知らせ,トップページ

@@ -18,10 +18,12 @@
       </div>
     </header>
 
-    <main class="archive-main">
-      <!-- 統計・収集率エリア -->
+    <!-- 統計・収集率エリア -->
       <section class="stats-section">
-        <h2>図鑑収集状況</h2>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2>図鑑収集状況</h2>
+          <button type="button" id="btn-reset-archive" class="btn-back" style="color: #c53030; border-color: #feb2b2;">図鑑をリセット</button>
+        </div>
         <div class="stats-box">
           <div class="stats-count">
             発見数: <span id="unlocked-count">0</span> / <span id="total-count">0</span>
