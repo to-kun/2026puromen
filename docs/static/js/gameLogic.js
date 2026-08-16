@@ -208,4 +208,25 @@ class GameLogic {
   }
 }
 
+// デバッグ用関数（クラス外部に配置）
+window.debugSetAnomaly = function (id) {
+  if (id === null || id === undefined || id === 0) {
+    // 異変なし状態にする
+    window.AnomalyManager.reset();
+    window.game.hasAnomaly = false;
+    console.log('[DEBUG] 異変なし状態に設定しました');
+  } else {
+    // 指定IDの異変を起こす
+    window.AnomalyManager.reset(); // 一度リセット
+    const formattedId = String(id).padStart(2, '0');
+    const success = window.AnomalyManager.applyById(formattedId);
+    if (success) {
+      window.game.hasAnomaly = true;
+      console.log(`[DEBUG] 異変 No.${formattedId} を強制発生させました`);
+    } else {
+      console.warn(`[DEBUG] 異変 No.${formattedId} の適用に失敗しました`);
+    }
+  }
+};
+
 window.game = new GameLogic();
