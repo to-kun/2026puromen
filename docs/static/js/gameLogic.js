@@ -5,10 +5,9 @@ class GameLogic {
     this.hasAnomaly = false;
     this.isFirstPlay = true;
     this.isReviewMode = false;
-    this.lastAnomalyId = null; // 振り返り用に「直前まで表示されていた異変ID」を保持
+    this.lastAnomalyId = null; // 直前の異変ID
   }
 
-  // 画面表示切り替え用共通メソッド
   showScreen(screenId) {
     const screens = ['screen-transition', 'screen-game'];
     screens.forEach(id => {
@@ -51,7 +50,7 @@ class GameLogic {
     this.openGameScreen();
   }
 
-  // 振り返り実行：退避しておいた直前の異変IDを使って画面Bを再再現する
+  // 振り返り実行：退避していた直前の異変IDを画面Bに適用
   startReview() {
     this.isReviewMode = true;
     
@@ -113,14 +112,14 @@ class GameLogic {
 
   // プレイヤーの選択処理
   makeChoice(playerThinksAnomaly) {
-    // 振り返りモード中の場合：選択ボタンを押したら案内画面Aへ戻る
+    // 振り返りモード中にボタンを押した場合：判定を行わず案内画面Aへ戻る
     if (this.isReviewMode) {
       this.isReviewMode = false;
       this.showScreen('screen-transition');
       return;
     }
 
-    // ★重要: 回答ボタンが押された「直前の異変ID」を退避保存しておく
+    // 1. 判定前に現在の異変IDを振り返り用として退避
     if (window.AnomalyManager && window.AnomalyManager.activeAnomaly) {
       this.lastAnomalyId = window.AnomalyManager.activeAnomaly.id;
     } else {
@@ -133,8 +132,6 @@ class GameLogic {
     // 回答判定
     if (playerThinksAnomaly === this.hasAnomaly) {
       // ---------------- 正解処理 ----------------
-
-      // 異変ありを正しく報告できた場合、図鑑を解放
       if (playerThinksAnomaly === true && window.AnomalyManager && window.AnomalyManager.activeAnomaly) {
         const currentAnomalyId = window.AnomalyManager.activeAnomaly.id;
         if (window.StorageManager) {
