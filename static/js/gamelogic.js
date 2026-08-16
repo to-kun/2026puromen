@@ -5,7 +5,7 @@ class GameLogic {
     this.hasAnomaly = false;
     this.isFirstPlay = true;
     this.isReviewMode = false;
-    this.lastAnomalyId = null; // 直前の異変ID保持用
+    this.lastAnomalyId = null; // 振り返り用に「直前まで表示されていた異変ID」を保持
   }
 
   // 画面表示切り替え用共通メソッド
@@ -51,7 +51,7 @@ class GameLogic {
     this.openGameScreen();
   }
 
-  // 振り返り実行：画面Bをそのまま開き、直前の異変（または正常状態）を再適用して見せる
+  // 振り返り実行：退避しておいた直前の異変IDを使って画面Bを再再現する
   startReview() {
     this.isReviewMode = true;
     
@@ -73,11 +73,13 @@ class GameLogic {
   }
 
   updateStage(customTitle = null, customMsg = null, customMsg2 = null, showReview = null) {
+    const currentStepNum = Number(this.currentStep);
+    const title = customTitle || `階層 ${currentStepNum}`;
+
     if (this.isFirstPlay) {
       this.hasAnomaly = false;
-      this.lastAnomalyId = null;
       this.showTransition(
-        `階層 ${Number(this.currentStep)}`,
+        title,
         "異変がないか、ページ内を注意深く確認してください。",
         "各種リンクは押せないようになっています。また、「報告・お問い合わせ」から次へ進めます。",
         "探索を開始する",
@@ -86,7 +88,6 @@ class GameLogic {
     } else {
       this.hasAnomaly = Math.random() < 0.5;
 
-      const title = customTitle || `階層 ${Number(this.currentStep)}`;
       const msg = customMsg || "異変がないか、ページ内を注意深く確認してください。";
       const msg2 = customMsg2 || "";
       const reviewFlag = (showReview !== null) ? showReview : true;
@@ -99,15 +100,13 @@ class GameLogic {
 
       if (this.hasAnomaly) {
         const appliedId = window.AnomalyManager.applyRandom();
-        this.lastAnomalyId = appliedId; // 直前の異変IDを記録
         if (appliedId) {
-          console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり (No.${appliedId})`);
+          console.log(`[DEBUG] 階層 ${currentStepNum}: 異変あり (No.${appliedId})`);
         } else {
-          console.warn(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり判定ですが、対象の異変が取得できませんでした`);
+          console.warn(`[DEBUG] 階層 ${currentStepNum}: 異変あり判定ですが、対象の異変が取得できませんでした`);
         }
       } else {
-        this.lastAnomalyId = null; // 異変なしを記録
-        console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変なし`);
+        console.log(`[DEBUG] 階層 ${currentStepNum}: 異変なし`);
       }
     }
   }
@@ -119,6 +118,13 @@ class GameLogic {
       this.isReviewMode = false;
       this.showScreen('screen-transition');
       return;
+    }
+
+    // ★重要: 回答ボタンが押された「直前の異変ID」を退避保存しておく
+    if (window.AnomalyManager && window.AnomalyManager.activeAnomaly) {
+      this.lastAnomalyId = window.AnomalyManager.activeAnomaly.id;
+    } else {
+      this.lastAnomalyId = null;
     }
 
     // 初回フラグを解除
