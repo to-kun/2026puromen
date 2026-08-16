@@ -5,11 +5,12 @@ class GameLogic {
     this.hasAnomaly = false;
     this.isFirstPlay = true;
     this.isReviewMode = false;
+    this.lastAnomalyId = null; // 直前の異変ID保持用
   }
 
   // 画面表示切り替え用共通メソッド
   showScreen(screenId) {
-    const screens = ['screen-transition', 'screen-game', 'screen-review'];
+    const screens = ['screen-transition', 'screen-game'];
     screens.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -50,56 +51,18 @@ class GameLogic {
     this.openGameScreen();
   }
 
+  // 振り返り実行：画面Bをそのまま開き、直前の異変（または正常状態）を再適用して見せる
   startReview() {
     this.isReviewMode = true;
-    this.showScreen('screen-review');
-    this.renderReviewList();
-  }
-
-  renderReviewList() {
-    const listContainer = document.getElementById('review-list'); // 異変リスト描画先
-    if (!window.AnomalyManager) return;
-
-    const reviewData = window.AnomalyManager.getReviewData();
-    const totalCount = reviewData.length;
-    const unlockedCount = reviewData.filter(item => item.isUnlocked).length;
-    const progressPercent = totalCount > 0 ? Math.round((unlockedCount / totalCount) * 100) : 0;
-
-    // 1. カウンター・進捗率の更新（画面上に要素が存在すれば反映）
-    const countEl = document.getElementById('review-count');
-    if (countEl) {
-      countEl.textContent = `${unlockedCount} / ${totalCount}`;
-    }
-
-    const percentEl = document.getElementById('review-percent');
-    if (percentEl) {
-      percentEl.textContent = `${progressPercent}%`;
-    }
-
-    // 2. リスト部分のHTML生成
-    if (!listContainer) return;
-
-    let html = '';
-    reviewData.forEach(item => {
-      if (item.isUnlocked) {
-        html += `
-          <div class="review-item unlocked">
-            <span class="anomaly-id">No.${item.id}</span>
-            <span class="anomaly-desc">${item.description}</span>
-            <span class="anomaly-tab">（${item.tab}タブ）</span>
-          </div>
-        `;
-      } else {
-        html += `
-          <div class="review-item locked">
-            <span class="anomaly-id">No.${item.id}</span>
-            <span class="anomaly-desc">？？？？？？？？？？</span>
-          </div>
-        `;
+    
+    if (window.AnomalyManager) {
+      window.AnomalyManager.reset();
+      if (this.lastAnomalyId) {
+        window.AnomalyManager.applyById(this.lastAnomalyId);
       }
-    });
+    }
 
-    listContainer.innerHTML = html;
+    this.showScreen('screen-game');
   }
 
   openGameScreen() {
@@ -112,6 +75,7 @@ class GameLogic {
   updateStage(customTitle = null, customMsg = null, customMsg2 = null, showReview = null) {
     if (this.isFirstPlay) {
       this.hasAnomaly = false;
+      this.lastAnomalyId = null;
       this.showTransition(
         `階層 ${Number(this.currentStep)}`,
         "異変がないか、ページ内を注意深く確認してください。",
@@ -135,12 +99,14 @@ class GameLogic {
 
       if (this.hasAnomaly) {
         const appliedId = window.AnomalyManager.applyRandom();
+        this.lastAnomalyId = appliedId; // 直前の異変IDを記録
         if (appliedId) {
           console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり (No.${appliedId})`);
         } else {
           console.warn(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変あり判定ですが、対象の異変が取得できませんでした`);
         }
       } else {
+        this.lastAnomalyId = null; // 異変なしを記録
         console.log(`[DEBUG] 階層 ${Number(this.currentStep)}: 異変なし`);
       }
     }
@@ -148,14 +114,14 @@ class GameLogic {
 
   // プレイヤーの選択処理
   makeChoice(playerThinksAnomaly) {
-    // 振り返りモード中の場合：判定を行わず案内画面Aへ戻る
+    // 振り返りモード中の場合：選択ボタンを押したら案内画面Aへ戻る
     if (this.isReviewMode) {
       this.isReviewMode = false;
       this.showScreen('screen-transition');
       return;
     }
 
-    // 初回フラグを解除（一度でも選択したら2回目以降扱い）
+    // 初回フラグを解除
     this.isFirstPlay = false;
 
     // 回答判定
@@ -211,17 +177,17 @@ class GameLogic {
 // デバッグ用関数（クラス外部に配置）
 window.debugSetAnomaly = function (id) {
   if (id === null || id === undefined || id === 0) {
-    // 異変なし状態にする
     window.AnomalyManager.reset();
     window.game.hasAnomaly = false;
+    window.game.lastAnomalyId = null;
     console.log('[DEBUG] 異変なし状態に設定しました');
   } else {
-    // 指定IDの異変を起こす
-    window.AnomalyManager.reset(); // 一度リセット
+    window.AnomalyManager.reset();
     const formattedId = String(id).padStart(2, '0');
     const success = window.AnomalyManager.applyById(formattedId);
     if (success) {
       window.game.hasAnomaly = true;
+      window.game.lastAnomalyId = formattedId;
       console.log(`[DEBUG] 異変 No.${formattedId} を強制発生させました`);
     } else {
       console.warn(`[DEBUG] 異変 No.${formattedId} の適用に失敗しました`);
