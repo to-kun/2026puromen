@@ -63,37 +63,42 @@ class AnomalyManager {
     if (this.anomalies.length === 0) return null;
     const randomIndex = Math.floor(Math.random() * this.anomalies.length);
     const targetAnomaly = this.anomalies[randomIndex];
-    
+
     const success = this.applyById(targetAnomaly.id);
     return success ? targetAnomaly.id : null;
   }
 
   // 指定IDの異変適用
   applyById(id) {
-    const anomaly = this.anomalies.find(a => String(a.id) === String(id));
-    if (!anomaly) return false;
+    // 該当するIDの異変定義をすべて取得
+    const matches = this.anomalies.filter(a => String(a.id) === String(id));
+    if (matches.length === 0) return false;
 
-    const target = document.getElementById(anomaly.target_id);
-    if (!target) return false;
+    let appliedCount = 0;
 
-    if (anomaly.type === 'text') {
-      target.textContent = anomaly.anomaly_value;
-    } else if (anomaly.type === 'html') {
-      target.innerHTML = anomaly.anomaly_value;
-    } else if (anomaly.type === 'style') {
-      target.style.cssText += anomaly.anomaly_value;
+    matches.forEach(anomaly => {
+      const target = document.getElementById(anomaly.target_id);
+      if (target) {
+        if (anomaly.type === 'text') target.textContent = anomaly.anomaly_value;
+        else if (anomaly.type === 'html') target.innerHTML = anomaly.anomaly_value;
+        else if (anomaly.type === 'style') target.style.cssText += anomaly.anomaly_value;
+        appliedCount++;
+      }
+    });
+
+    if (appliedCount > 0) {
+      this.activeAnomaly = matches[0]; // 図鑑表示用には最初の1件をセット
+      return true;
     }
-
-    this.activeAnomaly = anomaly;
-    return true;
+    return false;
   }
 
   // 全異変一覧と解放状態の取得
   getReviewData() {
-    const unlockedIds = window.StorageManager 
-      ? window.StorageManager.getUnlockedAnomalies().map(id => String(id).padStart(2, '0')) 
+    const unlockedIds = window.StorageManager
+      ? window.StorageManager.getUnlockedAnomalies().map(id => String(id).padStart(2, '0'))
       : [];
-    
+
     return this.anomalies.map(anomaly => {
       const formattedId = String(anomaly.id).padStart(2, '0');
       const isUnlocked = unlockedIds.includes(formattedId);
