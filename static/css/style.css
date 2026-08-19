@@ -1277,3 +1277,47 @@ body.archive-page .archive-header h1 {
   border-top: 1px solid #e2e8f0;
   margin-top: 40px;
 }
+
+
+
+
+/* ==========================================
+   異変用追加セット
+   ========================================== */
+
+/* 05用 */
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+  50% { transform: translate(3px, -1px) rotate(0.5deg); }
+  75% { transform: translate(-2px, -2px) rotate(-0.5deg); }
+  100% { transform: translate(2px, 1px) rotate(0deg); }
+}
+
+#screen-game {
+  background-color: #fff; /* 隙間が見えないよう背景色を設定 */
+  overflow: hidden;       /* アニメーションでみみ出す要素の画面外露出を防止 */
+  min-height: 100vh;
+}
+
+
+
+/*06用*/
+.is-spooky-scroll #spooky-scroll-area {
+  display: block !important;
+}
+
+#spooky-scroll-area {
+  display: none;
+  width: 100%;
+  padding: 100px 20px 500px 20px;
+  background-color: #000000;
+  color: #ff0000;
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 6px;
+  line-height: 2.2;
+  text-align: center;
+  user-select: none;
+  box-sizing: border-box;
+}

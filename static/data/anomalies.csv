@@ -5,3 +5,7 @@ id,type,target_id,anomaly_value,description,tab
 04,text,hero-catch,市役所は閉鎖されました,市役所閉鎖のお知らせ,トップページ
 04,style,tab-top,filter: grayscale(100%);,市役所閉鎖のお知らせ,トップページ
 04,html,header-date,<s>令和8年8月12日</s> <b>消滅</b>,市役所閉鎖のお知らせ,トップページ
+05,style,screen-game,animation: shake 0.2s infinite;,画面が小刻みに揺れる,トップページ
+06,style,spooky-scroll-area,display: block !important;,大量の「引き返せ」,市長の部屋
+06,style,spooky-scroll-area,margin-top: 150vh; color: red; font-size: 2rem;,大量の「引き返せ」,市長の部屋
+06,style,tab-shicho,padding-bottom: 5000px;,大量の「引き返せ」,市長の部屋

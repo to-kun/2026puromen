@@ -53,24 +53,41 @@ class AnomalyManager {
     const screenGame = document.getElementById('screen-game');
     if (screenGame && this.initialHTML) {
       screenGame.innerHTML = this.initialHTML;
-      screenGame.className = '';
+      screenGame.className = 'screen';
     }
+    
+    // bodyおよび画面全体に追加されたクラスや直接スタイルもクリア
+    document.body.classList.remove('is-shaking');
+    document.body.style.animation = '';
+    if (screenGame) screenGame.style.animation = '';
+    
     this.activeAnomaly = null;
   }
 
   // 異変のランダム適用
+// 異変のランダム適用（重み付け抽選付き）
   applyRandom() {
     if (this.anomalies.length === 0) return null;
-    const randomIndex = Math.floor(Math.random() * this.anomalies.length);
-    const targetAnomaly = this.anomalies[randomIndex];
-
-    const success = this.applyById(targetAnomaly.id);
-    return success ? targetAnomaly.id : null;
+    const uniqueIds = Array.from(new Set(this.anomalies.map(a => String(a.id).padStart(2, '0'))));
+    const unlockedIds = window.StorageManager 
+      ? window.StorageManager.getUnlockedAnomalies().map(id => String(id).padStart(2, '0')) 
+      : [];
+    const weightedPool = [];
+    uniqueIds.forEach(id => {
+      const isUnlocked = unlockedIds.includes(id);
+      const weight = isUnlocked ? 1 : 5;
+      for (let i = 0; i < weight; i++) {
+        weightedPool.push(id);
+      }
+    });
+    const randomIndex = Math.floor(Math.random() * weightedPool.length);
+    const selectedId = weightedPool[randomIndex];
+    const success = this.applyById(selectedId);
+    return success ? selectedId : null;
   }
 
   // 指定IDの異変適用
   applyById(id) {
-    // 該当するIDの異変定義をすべて取得
     const matches = this.anomalies.filter(a => String(a.id) === String(id));
     if (matches.length === 0) return false;
 
@@ -79,17 +96,25 @@ class AnomalyManager {
     matches.forEach(anomaly => {
       const target = document.getElementById(anomaly.target_id);
       if (target) {
-        if (anomaly.type === 'text') target.textContent = anomaly.anomaly_value;
-        else if (anomaly.type === 'html') target.innerHTML = anomaly.anomaly_value;
-        else if (anomaly.type === 'style') target.style.cssText += anomaly.anomaly_value;
-        appliedCount++;
+        if (anomaly.type === 'text') {
+          target.textContent = anomaly.anomaly_value;
+          appliedCount++;
+        } else if (anomaly.type === 'html') {
+          target.innerHTML = anomaly.anomaly_value;
+          appliedCount++;
+        } else if (anomaly.type === 'style') {
+          target.style.cssText += anomaly.anomaly_value;
+          appliedCount++;
+        }
       }
     });
 
     if (appliedCount > 0) {
-      this.activeAnomaly = matches[0]; // 図鑑表示用には最初の1件をセット
+      // アクティブな異変情報として先頭のオブジェクトを保持
+      this.activeAnomaly = matches[0];
       return true;
     }
+
     return false;
   }
 
